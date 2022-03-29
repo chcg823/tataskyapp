@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -27,6 +28,9 @@ public class Account {
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Recharge> recharges;
 
+	@ManyToOne(cascade = CascadeType.ALL)
+	private Pack pack;
+	
 	@Column
 	private LocalDate registeredDate;
 
@@ -56,7 +60,13 @@ public class Account {
 	public void setAccountId(Long accountId) {
 		this.accountId = accountId;
 	}
-
+	
+	public void addRecharge(Recharge recharge) {
+		recharges.add(recharge);
+	}
+	
+	
+	
 //	public User getUser() {
 //		return user;
 //	}

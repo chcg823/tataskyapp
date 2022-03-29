@@ -19,7 +19,7 @@ public class Pack {
 	@Column(length = 15)
 	private String planName;
 
-//	@Column(length = 15)
+//	@Column
 //	private List<String> channels;
 	public Long getId() {
 		return id;
