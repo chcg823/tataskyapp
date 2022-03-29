@@ -16,7 +16,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "accountTab")
+@Table(name = "account")
 public class Account {
 
 	@Id
@@ -24,7 +24,7 @@ public class Account {
 	private Long accountId;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "id")
+	@JoinColumn(name = "user_id")
 	private Users users;
 
 	@OneToMany(cascade = CascadeType.ALL)
