@@ -28,7 +28,7 @@ public class Account {
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Recharge> recharges;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	//@ManyToOne(cascade = CascadeType.ALL)
 	private Pack pack;
 	
 	@Column
