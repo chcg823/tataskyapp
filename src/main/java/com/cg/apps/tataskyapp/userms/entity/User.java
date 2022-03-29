@@ -4,7 +4,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -16,22 +15,25 @@ public class User {
 
 	@Id
 	private int id;
-	@Column(length = 10)
+	@Column(length = 30)
 	private String username;
-	@Column(length = 10)
+	@Column(length = 30)
 	private String firstName;
-	@Column(length = 10)
+	@Column(length = 30)
 	private String lastName;
-	@Column(length = 10)
+	@Column(length = 30)
 	private String password;
 	@Column(length = 10)
 	private String role;
-	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "accountId")
 	private Account account;
 
-	public User(int id, String username, String firstName, String lastName, String password, String role, Account account) {
+	public User() {
+
+	}
+
+	public User(int id, String username, String firstName, String lastName, String password, String role,
+			Account account) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -39,14 +41,6 @@ public class User {
 		this.lastName = lastName;
 		this.password = password;
 		this.role = role;
-		this.account = account;
-	}
-
-	public Account getAccount() {
-		return account;
-	}
-
-	public void setAccount(Account account) {
 		this.account = account;
 	}
 
@@ -97,5 +91,15 @@ public class User {
 	public void setRole(String role) {
 		this.role = role;
 	}
+
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
+	}
+	
+	
 
 }
