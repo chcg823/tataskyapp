@@ -1,12 +1,16 @@
 package com.cg.apps.tataskyapp.accountms.entity;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.cg.apps.tataskyapp.rechargems.entity.Recharge;
 
 @Entity
 @Table(name = "accountTab")
@@ -19,8 +23,8 @@ public class Account {
 //	@JoinColumn(name = "id")
 //	private User user;
 
-//	@OneToMany(mappedBy="account", cascade = CascadeType.ALL)
-//    private List<Recharge>recharges;
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Recharge> recharges;
 
 	@Column
 	private LocalDate registeredDate;
@@ -29,11 +33,19 @@ public class Account {
 
 	}
 
-	public Account(Long accountId, LocalDate registeredDate) {
+	public Account(Long accountId, List<Recharge> recharges, LocalDate registeredDate) {
 		super();
 		this.accountId = accountId;
-//		this.user = user;
+		this.recharges = recharges;
 		this.registeredDate = registeredDate;
+	}
+
+	public List<Recharge> getRecharges() {
+		return recharges;
+	}
+
+	public void setRecharges(List<Recharge> recharges) {
+		this.recharges = recharges;
 	}
 
 	public Long getAccountId() {
