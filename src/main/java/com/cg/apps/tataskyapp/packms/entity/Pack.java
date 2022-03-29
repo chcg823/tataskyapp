@@ -4,11 +4,15 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import com.cg.apps.tataskyapp.accountms.entity.Account;
 
+@Entity
+@Table(name = "pack")
 public class Pack {
 	@Id
 	private Long id;

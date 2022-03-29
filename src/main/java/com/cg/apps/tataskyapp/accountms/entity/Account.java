@@ -5,17 +5,21 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import com.cg.apps.tataskyapp.packms.entity.Pack;
 import com.cg.apps.tataskyapp.rechargems.entity.Recharge;
 import com.cg.apps.tataskyapp.servicerequestms.entity.ServiceRequest;
 import com.cg.apps.tataskyapp.userms.entity.User;
 
+@Entity
+@Table(name = "account")
 public class Account {
 	@Id
 	private Long accountId;

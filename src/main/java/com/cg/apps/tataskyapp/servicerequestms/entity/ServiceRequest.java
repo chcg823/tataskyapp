@@ -3,12 +3,16 @@ package com.cg.apps.tataskyapp.servicerequestms.entity;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import com.cg.apps.tataskyapp.accountms.entity.Account;
 
+@Entity
+@Table(name = "servicerequest")
 public class ServiceRequest {
 	@Id
 	private Long id;
