@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.cg.apps.tataskyapp.accountms.entity.Account;
 
 @Entity
 @Table(name = "user")
@@ -23,7 +22,7 @@ public class User {
 	@Column(length = 10)
 	private String role;
 	
-	private Account account;
+//	private Account account;
 	
 	public User() {
 		
@@ -77,16 +76,15 @@ public class User {
 		this.role = role;
 	}
 
-	public Account getAccount() {
-		return account;
-	}
+//	public Account getAccount() {
+//		return account;
+//	}
+//
+//	public void setAccount(Account account) {
+//		this.account = account;
+//	}
 
-	public void setAccount(Account account) {
-		this.account = account;
-	}
-
-	public User(int id, String username, String firstName, String lastName, String password, String role,
-			Account account) {
+	public User(int id, String username, String firstName, String lastName, String password, String role) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -94,7 +92,7 @@ public class User {
 		this.lastName = lastName;
 		this.password = password;
 		this.role = role;
-		this.account = account;
+//		this.account = account;
 	}
 	
 	
