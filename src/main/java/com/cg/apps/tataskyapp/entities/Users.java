@@ -3,15 +3,19 @@ package com.cg.apps.tataskyapp.entities;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "userTab")
-public class User {
+public class Users {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	@Column(length = 30)
 	private String username;
@@ -24,13 +28,14 @@ public class User {
 	@Column(length = 10)
 	private String role;
 	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "account_id")
 	private Account account;
 
-	public User() {
+	public Users() {
 
 	}
 
-	public User(int id, String username, String firstName, String lastName, String password, String role,
+	public Users(int id, String username, String firstName, String lastName, String password, String role,
 			Account account) {
 		super();
 		this.id = id;

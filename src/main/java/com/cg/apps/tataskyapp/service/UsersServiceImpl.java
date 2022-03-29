@@ -5,23 +5,24 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cg.apps.tataskyapp.dao.UserDao;
-import com.cg.apps.tataskyapp.entities.User;
+
+import com.cg.apps.tataskyapp.dao.UsersDao;
+import com.cg.apps.tataskyapp.entities.Users;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UsersServiceImpl implements UsersService{
 
 	@Autowired
-	UserDao userDao;
+	UsersDao usersDao;
 	
 	@Override
-	public void addUser(User user) {
+	public void addUser(Users user) {
 		// TODO Auto-generated method stub
-		userDao.save(user);
+		usersDao.save(user);
 		
 	}
 	@Override
-	public List<User> getUsers() {
+	public List<Users> getUsers() {
 		// TODO Auto-generated method stub
 		return null;
 	}

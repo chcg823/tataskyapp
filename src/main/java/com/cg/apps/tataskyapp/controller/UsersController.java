@@ -6,17 +6,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cg.apps.tataskyapp.entities.User;
-import com.cg.apps.tataskyapp.service.UserService;
+import com.cg.apps.tataskyapp.entities.Users;
+import com.cg.apps.tataskyapp.service.UsersService;
 
 @RestController
 @RequestMapping("/user")
-public class UserController {
+public class UsersController {
 	@Autowired
-	UserService userService;
+	UsersService userService;
 	
 	@PostMapping
-	public String addUser(@RequestBody User user) {
+	public String addUser(@RequestBody Users user) {
 		userService.addUser(user);
 		return "User added";
 	}
