@@ -8,11 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "serviceRequest")
+@Table(name = "servicerequest")
 public class ServiceRequest {
 
 	@Id
@@ -21,6 +22,7 @@ public class ServiceRequest {
 	@Column(name = "requestDate")
 	private LocalDate requestDate;
 	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "account_id")
 	private Account account;
 	@Column(name = "message", length = 30)
 	private String message;

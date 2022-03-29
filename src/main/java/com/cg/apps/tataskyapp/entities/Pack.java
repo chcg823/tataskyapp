@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "packTable")
+@Table(name = "pack")
 public class Pack {
 	@Id
 	private Long id;
