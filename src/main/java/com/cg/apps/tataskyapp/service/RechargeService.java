@@ -17,5 +17,5 @@ public interface RechargeService {
 	int countRechargesInPeriod(LocalDate startDate, LocalDate endDate);
 	double totalRevenueInPeriod(LocalDate startDate, LocalDate endDate);
 	int rechargesCount(Pack pack);
-	Recharge expireIfValidityFinished(Account account ,Recharge recharge);
+	String expireIfValidityFinished(Account account ,Recharge recharge);
 }

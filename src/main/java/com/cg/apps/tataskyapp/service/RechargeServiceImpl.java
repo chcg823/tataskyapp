@@ -1,6 +1,7 @@
 package com.cg.apps.tataskyapp.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -49,9 +50,15 @@ public class RechargeServiceImpl implements RechargeService{
 
 	@Override
 	public List<Recharge> findRechargesForUserInDescendingOrderByPurchasedDate(Account account) {
-		List<Recharge> rechargeList = rechargeDao.findAll();
-		rechargeList = rechargeList.stream().filter((r)->r.getAccount().getAccountId()==account.getAccountId())
-					.collect(Collectors.toList());
+		List<Recharge> recharge = rechargeDao.findAll();
+		List<Recharge> rechargeList = new ArrayList<Recharge>();
+		for(Recharge r : recharge) {
+			if(r.getAccount().getAccountId() == account.getAccountId()) {
+				rechargeList.add(r);
+			}
+		}
+//		rechargeList = rechargeList.stream().filter((r)->r.getAccount().getAccountId()==account.getAccountId())
+//					.collect(Collectors.toList());
 		Collections.sort(rechargeList,
 			new Comparator<Recharge>(){
 				public int compare(Recharge r1, Recharge r2) {
@@ -70,64 +77,65 @@ public class RechargeServiceImpl implements RechargeService{
 
 	@Override
 	public List<Recharge> findAllRechargesInPeriod(LocalDate startDate, LocalDate endDate) {
-		List<Recharge> rechargeList = rechargeDao.findAll();
-		
+		List<Recharge> recharge = rechargeDao.findAll();
+		List<Recharge> rechargeList = new ArrayList<Recharge>();
+		for(Recharge r : recharge) {
+			LocalDate date = r.getPurchasedDate();
+			if(date.equals(startDate) || date.equals(endDate) || (date.isAfter(startDate) && date.isBefore(endDate))) {
+				rechargeList.add(r);
+			}
+		}
 		return rechargeList;
 	}
 
 	@Override
 	public int countRechargesInPeriod(LocalDate startDate, LocalDate endDate) {
-		// TODO Auto-generated method stub
-		return 0;
+		int count=0;
+		List<Recharge> recharge = rechargeDao.findAll();
+		List<Recharge> rechargeList = new ArrayList<Recharge>();
+		for(Recharge r : recharge) {
+			LocalDate date = r.getPurchasedDate();
+			if(date.equals(startDate) || date.equals(endDate) || (date.isAfter(startDate) && date.isBefore(endDate)))
+				count++;
+		}
+		return count;
 	}
 
 	@Override
 	public double totalRevenueInPeriod(LocalDate startDate, LocalDate endDate) {
-		// TODO Auto-generated method stub
-		return 0;
+		double revenue = 0;
+		List<Recharge> recharge = rechargeDao.findAll();
+		List<Recharge> rechargeList = new ArrayList<Recharge>();
+		for(Recharge r : recharge) {
+			LocalDate date = r.getPurchasedDate();
+			if(date.equals(startDate) || date.equals(endDate) || (date.isAfter(startDate) && date.isBefore(endDate)))
+				revenue += r.getAmount();
+		}
+		return revenue;
 	}
 
 	@Override
 	public int rechargesCount(Pack pack) {
-		// TODO Auto-generated method stub
-		return 0;
+		int count = 0;
+		List<Recharge> recharge = rechargeDao.findAll();
+		for(Recharge r : recharge) {
+			if(r.getPack().getId() == pack.getId())
+				count++;
+		}
+		return count;
 	}
 
 	@Override
-	public Recharge expireIfValidityFinished(Account account, Recharge recharge) {
-		// TODO Auto-generated method stub
-		return null;
+	public String expireIfValidityFinished(Account account, Recharge recharge) {
+		LocalDate date = LocalDate.now();
+		LocalDate rechargeDate = recharge.getPurchasedDate();
+		LocalDate validDate = rechargeDate.plusDays(recharge.getDaysValidity());
+		if(validDate.isBefore(date)) {
+			recharge.setActive(false);
+			account.setPack(null);
+			return "Validity Expired";
+		}else {
+			return "Validity not Expired";
+		}
 	}
-
-//	@Override
-//	public List<Recharge> findAllRechargesInPeriod(LocalDate startDate, LocalDate endDate) {
-//		List<Recharge> rechargeList = rechargeDao.findAll();
-//		
-//		return rechargeList;
-//	}
-//
-//	@Override
-//	public int countRechargesInPeriod(LocalDate startDate, LocalDate endDate) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
-//
-//	@Override
-//	public double totalRevenueInPeriod(LocalDate startDate, LocalDate endDate) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
-//
-//	@Override
-//	public int rechargesCount(Pack pack) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
-//
-//	@Override
-//	public Recharge expireIfValidityFinished(Account account, Recharge recharge) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-	
 }

@@ -3,6 +3,7 @@ package com.cg.apps.tataskyapp.entities;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -33,8 +34,8 @@ public class Recharge {
 	private String planName;
 	@Column
 	private LocalDate purchasedDate;
-//	@ManyToOne(cascade = CascadeType.ALL)
-//	private Pack pack;
+	@ManyToOne(cascade = CascadeType.ALL)
+	private Pack pack;
 	@ElementCollection
 	private List<String> channels;
 	private boolean active;
@@ -44,7 +45,7 @@ public class Recharge {
 	}
 
 	public Recharge(int id, Account account, double amount, int daysValidity, String planDescription, String planName,
-			LocalDate purchasedDate, List<String> channels, boolean active) {
+			LocalDate purchasedDate,Pack pack, List<String> channels, boolean active) {
 		this.id = id;
 		this.account = account;
 		this.amount = amount;
@@ -52,7 +53,7 @@ public class Recharge {
 		this.planDescription = planDescription;
 		this.planName = planName;
 		this.purchasedDate = purchasedDate;
-		//this.pack = pack;
+		this.pack = pack;
 		this.channels = channels;
 		this.active = active;
 	}
@@ -113,13 +114,13 @@ public class Recharge {
 		this.purchasedDate = purchasedDate;
 	}
 
-//	public Pack getPack() {
-//		return pack;
-//	}
-//
-//	public void setPack(Pack pack) {
-//		this.pack = pack;
-//	}
+	public Pack getPack() {
+		return pack;
+	}
+
+	public void setPack(Pack pack) {
+		this.pack = pack;
+	}
 
 	public List<String> getChannels() {
 		return channels;
