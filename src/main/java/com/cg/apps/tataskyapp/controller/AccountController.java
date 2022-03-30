@@ -17,15 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cg.apps.tataskyapp.entities.Account;
 import com.cg.apps.tataskyapp.service.AccountService;
 
-
-
 @RestController
 @RequestMapping("/account")
 public class AccountController {
-	
+
 	@Autowired
 	AccountService accountService;
-	
+
 	@PostMapping("/add")
 	public ResponseEntity<String> addAccount(@RequestBody Account account) {
 		Account newAcc = accountService.add(account);
@@ -34,7 +32,7 @@ public class AccountController {
 		String message = "Account added";
 		return new ResponseEntity<String>(message, header, HttpStatus.OK);
 	}
-	
+
 //	@PostMapping("/find-account")
 //	public ResponseEntity<String> findAccountById(@RequestBody Long accountId) {
 //		Account acc = accountService.findById(accountId);
@@ -43,7 +41,7 @@ public class AccountController {
 //		header.add("desc", "find account by Id");
 //		return new ResponseEntity<String>(message, header, HttpStatus.OK);
 //	}
-	
+
 	@GetMapping("/find-account/{accountId}")
 	public ResponseEntity<String> findAccountById(@PathVariable Long accountId) {
 		String message = new String();
@@ -51,12 +49,12 @@ public class AccountController {
 		header.add("desc", "find account by Id");
 		return new ResponseEntity<String>(message, header, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/delete-account")
 	public ResponseEntity<String> deleteAccountByAccountId(@RequestBody Long accountId) {
 		Optional<Account> accList = Optional.of(accountService.findByAccountId(accountId));
 		String message = new String();
-		if(accList.isEmpty())
+		if (accList.isEmpty())
 			message = "Account not found!";
 		else {
 			accountService.deleteByAccountId(accountId);
@@ -65,8 +63,7 @@ public class AccountController {
 		HttpHeaders header = new HttpHeaders();
 		return new ResponseEntity<String>(message, header, HttpStatus.OK);
 	}
-	
-	
+
 	@GetMapping("/greet")
 	public ResponseEntity<String> sayHello() {
 		String message = "Welcome";
@@ -74,5 +71,5 @@ public class AccountController {
 		header.add("desc", "Tata Sky App");
 		return new ResponseEntity<String>(message, header, HttpStatus.OK);
 	}
-	
+
 }
