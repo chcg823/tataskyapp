@@ -28,7 +28,7 @@ public class Users {
 	@Column(length = 10)
 	private String role;
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "account_id")
+	@JoinColumn(name = "accountId")
 	private Account account;
 
 	public Users() {
