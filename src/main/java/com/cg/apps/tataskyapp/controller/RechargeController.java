@@ -15,9 +15,9 @@ public class RechargeController {
 	@Autowired
 	RechargeService rechargeService;
 
-	@PostMapping
-	public String addUser(@RequestBody Recharge recharge) {
-		rechargeService.addRecharge(recharge);
-		return "Recharge added";
-	}
+//	@PostMapping
+//	public String addRecharge(@RequestBody Recharge recharge) {
+//		rechargeService.addRecharge(recharge);
+//		return "Recharge added";
+//	}
 }
