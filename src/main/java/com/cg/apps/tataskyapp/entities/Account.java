@@ -1,6 +1,7 @@
 package com.cg.apps.tataskyapp.entities;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -27,24 +28,59 @@ public class Account {
 	@JoinColumn(name = "user_id")
 	private Users users;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="account",cascade = CascadeType.ALL)
 	private List<Recharge> recharges;
+<<<<<<< HEAD
 
 	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "pack_id")
 	private Pack pack;
+
+=======
+    
 	
+	@ManyToOne
+	@JoinColumn(name="id")
+	private Pack pack;
+	@OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+	private List<ServiceRequest> requests = new ArrayList<>();
+	
+>>>>>>> b882fe8dbfeaee992ad70ffb798ac32d19a8d974
 	@Column
 	private LocalDate registeredDate;
-
+    
 	public Account() {
 
 	}
 
-	public Account(Long accountId, List<Recharge> recharges, LocalDate registeredDate) {
-		super();
+<<<<<<< HEAD
+	public void setPack(Pack pack) {
+=======
+	public Account(Long accountId, Users users, List<Recharge> recharges, Pack pack, List<ServiceRequest> requests,
+			LocalDate registeredDate) {
 		this.accountId = accountId;
+		this.users = users;
 		this.recharges = recharges;
+>>>>>>> b882fe8dbfeaee992ad70ffb798ac32d19a8d974
+		this.pack = pack;
+		this.requests = requests;
 		this.registeredDate = registeredDate;
+	}
+
+	public Long getAccountId() {
+		return accountId;
+	}
+
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
+	}
+
+	public Users getUsers() {
+		return users;
+	}
+
+	public void setUsers(Users users) {
+		this.users = users;
 	}
 
 	public List<Recharge> getRecharges() {
@@ -55,20 +91,19 @@ public class Account {
 		this.recharges = recharges;
 	}
 
-	public Long getAccountId() {
-		return accountId;
+	public Pack getPack() {
+		return pack;
 	}
 
-	public void setAccountId(Long accountId) {
-		this.accountId = accountId;
+	public void setPack(Pack pack) {
+		this.pack = pack;
 	}
-	
+
+<<<<<<< HEAD
 	public void addRecharge(Recharge recharge) {
 		recharges.add(recharge);
 	}
-	
-	
-	
+
 //	public User getUser() {
 //		return user;
 //	}
@@ -76,6 +111,15 @@ public class Account {
 //	public void setUser(User user) {
 //		this.user = user;
 //	}
+=======
+	public List<ServiceRequest> getRequests() {
+		return requests;
+	}
+
+	public void setRequests(List<ServiceRequest> requests) {
+		this.requests = requests;
+	}
+>>>>>>> b882fe8dbfeaee992ad70ffb798ac32d19a8d974
 
 	public LocalDate getRegisteredDate() {
 		return registeredDate;
@@ -84,12 +128,4 @@ public class Account {
 	public void setRegisteredDate(LocalDate registeredDate) {
 		this.registeredDate = registeredDate;
 	}
-
-//	@OneToMany(mappedBy="account", cascade = CascadeType.ALL)
-//    private List<ServiceRequest>requests;
-
-//	@ManyToOne
-//	@JoinColumn(name="id")
-//    private Pack currentPack;
-
 }

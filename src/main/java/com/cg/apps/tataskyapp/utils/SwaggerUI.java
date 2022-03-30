@@ -1,4 +1,4 @@
-package com.cg.apps.tataskyapp.utils.swagger;
+package com.cg.apps.tataskyapp.utils;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
