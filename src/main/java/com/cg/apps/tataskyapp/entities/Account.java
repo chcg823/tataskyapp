@@ -31,15 +31,15 @@ public class Account {
 	private List<Recharge> recharges;
 
 	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "pack_id")
 	private Pack pack;
-	
+
 	@Column
 	private LocalDate registeredDate;
 
 	public Account() {
 
 	}
-
 
 	public void setPack(Pack pack) {
 		this.pack = pack;
@@ -67,13 +67,11 @@ public class Account {
 	public void setAccountId(Long accountId) {
 		this.accountId = accountId;
 	}
-	
+
 	public void addRecharge(Recharge recharge) {
 		recharges.add(recharge);
 	}
-	
-	
-	
+
 //	public User getUser() {
 //		return user;
 //	}
