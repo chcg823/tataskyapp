@@ -30,6 +30,13 @@ public class Account {
 
 	@OneToMany(mappedBy="account",cascade = CascadeType.ALL)
 	private List<Recharge> recharges;
+<<<<<<< HEAD
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "pack_id")
+	private Pack pack;
+
+=======
     
 	
 	@ManyToOne
@@ -38,6 +45,7 @@ public class Account {
 	@OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
 	private List<ServiceRequest> requests = new ArrayList<>();
 	
+>>>>>>> b882fe8dbfeaee992ad70ffb798ac32d19a8d974
 	@Column
 	private LocalDate registeredDate;
     
@@ -45,11 +53,15 @@ public class Account {
 
 	}
 
+<<<<<<< HEAD
+	public void setPack(Pack pack) {
+=======
 	public Account(Long accountId, Users users, List<Recharge> recharges, Pack pack, List<ServiceRequest> requests,
 			LocalDate registeredDate) {
 		this.accountId = accountId;
 		this.users = users;
 		this.recharges = recharges;
+>>>>>>> b882fe8dbfeaee992ad70ffb798ac32d19a8d974
 		this.pack = pack;
 		this.requests = requests;
 		this.registeredDate = registeredDate;
@@ -87,6 +99,19 @@ public class Account {
 		this.pack = pack;
 	}
 
+<<<<<<< HEAD
+	public void addRecharge(Recharge recharge) {
+		recharges.add(recharge);
+	}
+
+//	public User getUser() {
+//		return user;
+//	}
+//
+//	public void setUser(User user) {
+//		this.user = user;
+//	}
+=======
 	public List<ServiceRequest> getRequests() {
 		return requests;
 	}
@@ -94,6 +119,7 @@ public class Account {
 	public void setRequests(List<ServiceRequest> requests) {
 		this.requests = requests;
 	}
+>>>>>>> b882fe8dbfeaee992ad70ffb798ac32d19a8d974
 
 	public LocalDate getRegisteredDate() {
 		return registeredDate;

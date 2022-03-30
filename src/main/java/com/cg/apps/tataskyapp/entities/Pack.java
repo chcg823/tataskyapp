@@ -24,12 +24,18 @@ public class Pack {
 
 //	@Column
 //	private List<String> channels;
+<<<<<<< HEAD
 	
+=======
+>>>>>>> ba2c481c9a4220f02d92799c17faa9e4e7ef3674
 
 	public Pack() {
-		
+
 	}
+<<<<<<< HEAD
 	
+=======
+>>>>>>> ba2c481c9a4220f02d92799c17faa9e4e7ef3674
 
 	public Long getId() {
 		return id;
