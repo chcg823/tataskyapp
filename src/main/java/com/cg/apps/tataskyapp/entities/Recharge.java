@@ -14,11 +14,11 @@ import javax.persistence.Table;
 public class Recharge {
 	@Id
 	private int id;
-//
+
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Account account;
 	@Column(length = 10)
-	private Double amount;
+	private int daysValidity;
 	@Column(length = 10)
 	private LocalDate purchasedDate;
 //	@Column
@@ -46,12 +46,12 @@ public class Recharge {
 		this.account = account;
 	}
 
-	public Double getAmount() {
-		return amount;
+	public int getDaysValidity() {
+		return daysValidity;
 	}
 
-	public void setAmount(Double amount) {
-		this.amount = amount;
+	public void setDaysValidity(int daysValidity) {
+		this.daysValidity = daysValidity;
 	}
 
 	public LocalDate getPurchasedDate() {
@@ -69,14 +69,4 @@ public class Recharge {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-
-	public Recharge(int id, Account account, Double amount, LocalDate purchasedDate, boolean active) {
-		super();
-		this.id = id;
-		this.account = account;
-		this.amount = amount;
-		this.purchasedDate = purchasedDate;
-		this.active = active;
-	}
-
 }
