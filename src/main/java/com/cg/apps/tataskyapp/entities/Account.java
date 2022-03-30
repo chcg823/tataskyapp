@@ -1,117 +1,114 @@
 package com.cg.apps.tataskyapp.entities;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 @Entity
 @Table(name = "account")
 public class Account {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long accountId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long accountId;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "user_id")
-	private Users users;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private Users users;
 
-	@OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
-	private List<Recharge> recharges;
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    private List<Recharge> recharges;
 
-	@ManyToOne
-	@JoinColumn(name = "account_pack")
-	private Pack currentPack;
-	@OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
-	private List<ServiceRequest> requests = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "account_pack")
+    private Pack currentPack;
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    private List<ServiceRequest> requests = new ArrayList<>();
 
-	@Column
-	private LocalDate registeredDate;
+    @Column
+    private LocalDate registeredDate;
 
-	public Account() {
+    public Account() {
 
-	}
+    }
 
-	public Account(Long accountId, Users users, List<Recharge> recharges, Pack pack, List<ServiceRequest> requests,
-			LocalDate registeredDate) {
-		this.accountId = accountId;
-		this.users = users;
-		this.recharges = recharges;
-		this.currentPack = pack;
-		this.requests = requests;
-		this.registeredDate = registeredDate;
-	}
-	
-	public Account(Account acc) {
-		this.accountId = acc.accountId;
-		this.users =acc.users;
-		this.recharges = acc.recharges;
-		this.currentPack = acc.currentPack;
-		this.requests = acc.requests;
-		this.registeredDate = acc.registeredDate;
-	}
+    public Account(Long accountId, Users users, List<Recharge> recharges, Pack pack, List<ServiceRequest> requests,
+                   LocalDate registeredDate) {
+        this.accountId = accountId;
+        this.users = users;
+        this.recharges = recharges;
+        this.currentPack = pack;
+        this.requests = requests;
+        this.registeredDate = registeredDate;
+    }
 
-	public Long getAccountId() {
-		return accountId;
-	}
+    public Account(Account acc) {
+        this.accountId = acc.accountId;
+        this.users = acc.users;
+        this.recharges = acc.recharges;
+        this.currentPack = acc.currentPack;
+        this.requests = acc.requests;
+        this.registeredDate = acc.registeredDate;
+    }
 
-	public void setAccountId(Long accountId) {
-		this.accountId = accountId;
-	}
+    public Long getAccountId() {
+        return accountId;
+    }
 
-	public Users getUsers() {
-		return users;
-	}
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
+    }
 
-	public void setUsers(Users users) {
-		this.users = users;
-	}
+    public Users getUsers() {
+        return users;
+    }
 
-	public List<Recharge> getRecharges() {
-		return recharges;
-	}
+    public void setUsers(Users users) {
+        this.users = users;
+    }
 
-	public void setRecharges(List<Recharge> recharges) {
-		this.recharges = recharges;
-	}
+    public List<Recharge> getRecharges() {
+        return recharges;
+    }
 
-	public void addRecharge(Recharge recharge) {
-		recharges.add(recharge);
-	}
+    public void setRecharges(List<Recharge> recharges) {
+        this.recharges = recharges;
+    }
 
-	public List<ServiceRequest> getRequests() {
-		return requests;
-	}
+    public void addRecharge(Recharge recharge) {
+        recharges.add(recharge);
+    }
 
-	public void setRequests(List<ServiceRequest> requests) {
-		this.requests = requests;
-	}
+    public List<ServiceRequest> getRequests() {
+        return requests;
+    }
 
-	public LocalDate getRegisteredDate() {
-		return registeredDate;
-	}
+    public void setRequests(List<ServiceRequest> requests) {
+        this.requests = requests;
+    }
 
-	public void setRegisteredDate(LocalDate registeredDate) {
-		this.registeredDate = registeredDate;
-	}
+    public LocalDate getRegisteredDate() {
+        return registeredDate;
+    }
 
-	@Override
-	public String toString() {
-		return "Account [accountId=" + accountId + ", users=" + users + ", recharges=" + recharges + ", currentPack="
-				+ currentPack + ", requests=" + requests + ", registeredDate=" + registeredDate + "]";
-	}
-	
-	
+    public void setRegisteredDate(LocalDate registeredDate) {
+        this.registeredDate = registeredDate;
+    }
+
+    public Pack getCurrentPack() {
+        return currentPack;
+    }
+
+    public void setCurrentPack(Pack currentPack) {
+        this.currentPack = currentPack;
+    }
+
+    @Override
+    public String toString() {
+        return "Account [accountId=" + accountId + ", users=" + users + ", recharges=" + recharges + ", currentPack="
+                + currentPack + ", requests=" + requests + ", registeredDate=" + registeredDate + "]";
+    }
+
+
 }

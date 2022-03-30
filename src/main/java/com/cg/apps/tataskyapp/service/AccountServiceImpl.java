@@ -26,13 +26,11 @@ public class AccountServiceImpl implements AccountService{
 	
 	@Override
 	public List<Account> getAccounts() {
-		// TODO Auto-generated method stub
-		return null;
+		return accDao.findAll();
 	}
 	@Override
 	public void deleteByAccountId(Long accountId) {
-		Account acc = accDao.getOne(accountId);
-		accDao.delete(acc);
+		accDao.deleteById(accountId);
 	}
 	@Override
 	public Account findByAccountId(Long accountId) {
@@ -47,8 +45,8 @@ public class AccountServiceImpl implements AccountService{
 	}
 	@Override
 	public int countAccounts() {
-		// TODO Auto-generated method stub
-		return 0;
+		int count = accDao.findAll().size();
+		return count;
 	}
 	@Override
 	public int countCreatedAccounts(LocalDate startDate, LocalDate endDate) {
@@ -62,7 +60,8 @@ public class AccountServiceImpl implements AccountService{
 	}
 	@Override
 	public void removePackFromAccount(Account account, Pack pack) {
-		// TODO Auto-generated method stub
-		
+		Account acc = new Account(account);
+		acc.setCurrentPack(null);
+		update(account);
 	}
 }
