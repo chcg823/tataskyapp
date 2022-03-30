@@ -40,6 +40,11 @@ public class Account {
 
 	}
 
+
+	public void setPack(Pack pack) {
+		this.pack = pack;
+	}
+
 	public Account(Long accountId, List<Recharge> recharges, LocalDate registeredDate) {
 		super();
 		this.accountId = accountId;
@@ -83,6 +88,11 @@ public class Account {
 
 	public void setRegisteredDate(LocalDate registeredDate) {
 		this.registeredDate = registeredDate;
+	}
+
+	public Pack getPack() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 //	@OneToMany(mappedBy="account", cascade = CascadeType.ALL)
