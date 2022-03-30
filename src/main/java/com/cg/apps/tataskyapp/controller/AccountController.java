@@ -27,7 +27,7 @@ public class AccountController {
 		return new ResponseEntity<String>(message, header, HttpStatus.OK);
 	}
 
-	@GetMapping("/find-account/{accountId}")
+	@DeleteMapping("/delete/{accountId}")
 	public ResponseEntity<String> deleteAccountById(@PathVariable Long accountId) {
 		accountService.deleteByAccountId(accountId);
 		HttpHeaders header = new HttpHeaders();
@@ -51,6 +51,13 @@ public class AccountController {
 		HttpHeaders header = new HttpHeaders();
 		header.add("desc", "Tata Sky App");
 		return new ResponseEntity<String>(message, header, HttpStatus.OK);
+	}
+
+	@GetMapping("/count/accounts")
+	public ResponseEntity<String> countAccount(){
+		int count = accountService.countAccounts();
+		String message = "Total no. of accounts: "+count;
+		return new ResponseEntity<String>(message, HttpStatus.OK);
 	}
 
 }

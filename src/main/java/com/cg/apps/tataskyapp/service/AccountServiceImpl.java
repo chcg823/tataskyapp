@@ -31,8 +31,8 @@ public class AccountServiceImpl implements AccountService{
 	}
 	@Override
 	public void deleteByAccountId(Long accountId) {
-//		acc = accDao.findByAccountId(accountId);
-		
+		Account acc = accDao.getOne(accountId);
+		accDao.delete(acc);
 	}
 	@Override
 	public Account findByAccountId(Long accountId) {
