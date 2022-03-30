@@ -5,7 +5,10 @@ import java.time.LocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -13,9 +16,11 @@ import javax.persistence.Table;
 @Table(name = "recharge")
 public class Recharge {
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
+	@JoinColumn(name = "accountId")
 	private Account account;
 	@Column(length = 10)
 	private int daysValidity;
