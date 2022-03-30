@@ -21,6 +21,7 @@ public class Pack {
 
 //	@Column
 //	private List<String> channels;
+	
 	public Long getId() {
 		return id;
 	}
