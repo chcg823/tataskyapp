@@ -31,11 +31,11 @@ public class AccountServiceImpl implements AccountService{
 	}
 	@Override
 	public void deleteByAccountId(Long accountId) {
-		// TODO Auto-generated method stub
+//		acc = accDao.findByAccountId(accountId);
 		
 	}
 	@Override
-	public Account findById(Long accountId) {
+	public Account findByAccountId(Long accountId) {
 		Optional<Account> opt = accDao.findById(accountId); 
 		Account acc = opt.get();
 		return acc;

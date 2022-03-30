@@ -11,8 +11,6 @@ import net.bytebuddy.asm.Advice.Local;
 public interface AccountService {
 
 	Account add(Account acc);
-
-	Account findById(Long accountId);
 	
 	Account update(Account account);
 	
@@ -27,6 +25,8 @@ public interface AccountService {
 	void removePackFromAccount(Account account, Pack pack);
 	
 	List<Account> getAccounts();
+
+	Account findByAccountId(Long accountId);
 	
 	
 
