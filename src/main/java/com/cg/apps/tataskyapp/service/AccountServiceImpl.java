@@ -2,6 +2,7 @@ package com.cg.apps.tataskyapp.service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,10 +18,12 @@ public class AccountServiceImpl implements AccountService{
 	AccountDao accDao;
 	
 	@Override
-	public void addAccount(Account acc) {
-		// TODO Auto-generated method stub
-		accDao.save(acc);
+	public Account add(Account acc) {
+		Account newAcc = new Account(acc);
+		accDao.save(newAcc);
+		return newAcc;
 	}
+	
 	@Override
 	public List<Account> getAccounts() {
 		// TODO Auto-generated method stub
@@ -28,13 +31,14 @@ public class AccountServiceImpl implements AccountService{
 	}
 	@Override
 	public void deleteByAccountId(Long accountId) {
-		// TODO Auto-generated method stub
+//		acc = accDao.findByAccountId(accountId);
 		
 	}
 	@Override
-	public Account findById(Long accountId) {
-		// TODO Auto-generated method stub
-		return null;
+	public Account findByAccountId(Long accountId) {
+		Optional<Account> opt = accDao.findById(accountId); 
+		Account acc = opt.get();
+		return acc;
 	}
 	@Override
 	public Account update(Account account) {

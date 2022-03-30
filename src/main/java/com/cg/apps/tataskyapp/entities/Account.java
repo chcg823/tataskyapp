@@ -28,18 +28,22 @@ public class Account {
 	@JoinColumn(name = "user_id")
 	private Users users;
 
-	@OneToMany(mappedBy="account",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
 	private List<Recharge> recharges;
 
 	@ManyToOne
-	@JoinColumn(name="id")
-	private Pack pack;
+	@JoinColumn(name = "account_pack")
+	private Pack currentPack;
 	@OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
 	private List<ServiceRequest> requests = new ArrayList<>();
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> e98ae6efa84478428455125e01b66e8a03f89824
 	@Column
 	private LocalDate registeredDate;
-    
+
 	public Account() {
 
 	}
@@ -49,9 +53,22 @@ public class Account {
 		this.accountId = accountId;
 		this.users = users;
 		this.recharges = recharges;
+<<<<<<< HEAD
 		this.pack = pack;
+=======
+		this.currentPack = pack;
+>>>>>>> e98ae6efa84478428455125e01b66e8a03f89824
 		this.requests = requests;
 		this.registeredDate = registeredDate;
+	}
+	
+	public Account(Account acc) {
+		this.accountId = acc.accountId;
+		this.users =acc.users;
+		this.recharges = acc.recharges;
+		this.currentPack = acc.currentPack;
+		this.requests = acc.requests;
+		this.registeredDate = acc.registeredDate;
 	}
 
 	public Long getAccountId() {
@@ -78,6 +95,7 @@ public class Account {
 		this.recharges = recharges;
 	}
 
+<<<<<<< HEAD
 	public Pack getPack() {
 		return pack;
 	}
@@ -86,10 +104,13 @@ public class Account {
 		this.pack = pack;
 	}
 
+=======
+>>>>>>> e98ae6efa84478428455125e01b66e8a03f89824
 	public void addRecharge(Recharge recharge) {
 		recharges.add(recharge);
 	}
 
+<<<<<<< HEAD
 //	public User getUser() {
 //		return user;
 //	}
@@ -98,6 +119,8 @@ public class Account {
 //		this.user = user;
 //	}
 
+=======
+>>>>>>> e98ae6efa84478428455125e01b66e8a03f89824
 	public List<ServiceRequest> getRequests() {
 		return requests;
 	}
@@ -113,4 +136,12 @@ public class Account {
 	public void setRegisteredDate(LocalDate registeredDate) {
 		this.registeredDate = registeredDate;
 	}
+
+	@Override
+	public String toString() {
+		return "Account [accountId=" + accountId + ", users=" + users + ", recharges=" + recharges + ", currentPack="
+				+ currentPack + ", requests=" + requests + ", registeredDate=" + registeredDate + "]";
+	}
+	
+	
 }
