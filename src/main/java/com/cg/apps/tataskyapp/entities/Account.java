@@ -32,7 +32,7 @@ public class Account {
 	private List<Recharge> recharges;
 
 	@ManyToOne
-	@JoinColumn(name = "id")
+	@JoinColumn(name = "account_pack")
 	private Pack currentPack;
 	@OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
 	private List<ServiceRequest> requests = new ArrayList<>();
@@ -52,6 +52,15 @@ public class Account {
 		this.currentPack = pack;
 		this.requests = requests;
 		this.registeredDate = registeredDate;
+	}
+	
+	public Account(Account acc) {
+		this.accountId = acc.accountId;
+		this.users =acc.users;
+		this.recharges = acc.recharges;
+		this.currentPack = acc.currentPack;
+		this.requests = acc.requests;
+		this.registeredDate = acc.registeredDate;
 	}
 
 	public Long getAccountId() {
@@ -97,4 +106,12 @@ public class Account {
 	public void setRegisteredDate(LocalDate registeredDate) {
 		this.registeredDate = registeredDate;
 	}
+
+	@Override
+	public String toString() {
+		return "Account [accountId=" + accountId + ", users=" + users + ", recharges=" + recharges + ", currentPack="
+				+ currentPack + ", requests=" + requests + ", registeredDate=" + registeredDate + "]";
+	}
+	
+	
 }

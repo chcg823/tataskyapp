@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.cg.apps.tataskyapp.entities.Account;
 
 @Repository
-public interface AccountDao extends JpaRepository<Account, Integer>{
+public interface AccountDao extends JpaRepository<Account, Long>{
 	
 }

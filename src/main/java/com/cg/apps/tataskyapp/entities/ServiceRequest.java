@@ -22,7 +22,7 @@ public class ServiceRequest {
 	@Column(name = "requestDate")
 	private LocalDate requestDate;
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "account_id")
+	@JoinColumn(name = "account_service")
 	private Account account;
 	@Column(name = "message", length = 30)
 	private String message;

@@ -10,7 +10,7 @@ import net.bytebuddy.asm.Advice.Local;
 
 public interface AccountService {
 
-	void addAccount(Account acc);
+	Account add(Account acc);
 
 	Account findById(Long accountId);
 	
