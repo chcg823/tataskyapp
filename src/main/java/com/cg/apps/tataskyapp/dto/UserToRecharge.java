@@ -1,4 +1,4 @@
 package com.cg.apps.tataskyapp.dto;
 
-public class AccountPackDTO {
+public class UserToRecharge {
 }

@@ -1,6 +1,9 @@
 package com.cg.apps.tataskyapp.entities;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.cg.apps.tataskyapp.dao.UsersDao;
+import com.cg.apps.tataskyapp.dto.AccountDto;
+import com.cg.apps.tataskyapp.dto.AccountTo;
+import com.cg.apps.tataskyapp.service.UsersService;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -54,6 +57,7 @@ public class Account {
 		this.requests = acc.requests;
 		this.registeredDate = acc.registeredDate;
 	}
+
 
     public Long getAccountId() {
         return accountId;

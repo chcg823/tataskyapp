@@ -1,13 +1,11 @@
 package com.cg.apps.tataskyapp.service;
 
-import com.cg.apps.tataskyapp.dto.AccountDto;
+import com.cg.apps.tataskyapp.dto.AccountTo;
 import com.cg.apps.tataskyapp.entities.Account;
 import com.cg.apps.tataskyapp.entities.Pack;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public interface AccountService {
 
