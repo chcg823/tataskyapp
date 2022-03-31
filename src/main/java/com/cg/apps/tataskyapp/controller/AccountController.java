@@ -61,7 +61,7 @@ public class AccountController {
 		return new ResponseEntity<String>(message, HttpStatus.OK);
 	}
 
-	@GetMapping("/count/accounts/{startDate}-{endDate}")
+	@PostMapping("/count/accounts/{startDate}-{endDate}")
 	public ResponseEntity<String> countCreatedAccountsInPeriod(@PathVariable LocalDate startDate, @PathVariable LocalDate endDate) {
 		int count = accountService.countCreatedAccountsInPeriod(startDate, endDate);
 		String message = "Total no. of accounts created between period is :"+startDate.toString()+endDate.toString();
