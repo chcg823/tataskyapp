@@ -36,11 +36,7 @@ public class Account {
 	private Pack currentPack;
 	@OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
 	private List<ServiceRequest> requests = new ArrayList<>();
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> e98ae6efa84478428455125e01b66e8a03f89824
 	@Column
 	private LocalDate registeredDate;
 
@@ -53,11 +49,8 @@ public class Account {
 		this.accountId = accountId;
 		this.users = users;
 		this.recharges = recharges;
-<<<<<<< HEAD
-		this.pack = pack;
-=======
+		//this.pack = pack;
 		this.currentPack = pack;
->>>>>>> e98ae6efa84478428455125e01b66e8a03f89824
 		this.requests = requests;
 		this.registeredDate = registeredDate;
 	}
@@ -95,22 +88,18 @@ public class Account {
 		this.recharges = recharges;
 	}
 
-<<<<<<< HEAD
 	public Pack getPack() {
-		return pack;
+		return currentPack;
 	}
 
 	public void setPack(Pack pack) {
-		this.pack = pack;
+		this.currentPack = pack;
 	}
 
-=======
->>>>>>> e98ae6efa84478428455125e01b66e8a03f89824
 	public void addRecharge(Recharge recharge) {
 		recharges.add(recharge);
 	}
 
-<<<<<<< HEAD
 //	public User getUser() {
 //		return user;
 //	}
@@ -119,8 +108,6 @@ public class Account {
 //		this.user = user;
 //	}
 
-=======
->>>>>>> e98ae6efa84478428455125e01b66e8a03f89824
 	public List<ServiceRequest> getRequests() {
 		return requests;
 	}

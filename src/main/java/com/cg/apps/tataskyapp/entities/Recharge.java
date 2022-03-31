@@ -19,7 +19,7 @@ import javax.persistence.Table;
 public class Recharge {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private long id;
 
 	@ManyToOne
 	@JoinColumn(name = "accountId")
@@ -44,7 +44,7 @@ public class Recharge {
 
 	}
 
-	public Recharge(int id, Account account, double amount, int daysValidity, String planDescription, String planName,
+	public Recharge(long id, Account account, double amount, int daysValidity, String planDescription, String planName,
 			LocalDate purchasedDate,Pack pack, List<String> channels, boolean active) {
 		this.id = id;
 		this.account = account;
@@ -58,11 +58,11 @@ public class Recharge {
 		this.active = active;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

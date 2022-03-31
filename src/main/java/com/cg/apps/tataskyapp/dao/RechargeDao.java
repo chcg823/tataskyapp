@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.cg.apps.tataskyapp.entities.Recharge;
 
 @Repository
-public interface RechargeDao extends JpaRepository<Recharge, Integer>{
+public interface RechargeDao extends JpaRepository<Recharge, Long>{
 
 }

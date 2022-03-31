@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,7 +44,7 @@ public class RechargeServiceImpl implements RechargeService{
 		rechargeUpdated.setDaysValidity(recharge.getDaysValidity());
 		rechargeUpdated.setPlanDescription(recharge.getPlanDescription());
 		rechargeUpdated.setPlanName(recharge.getPlanName());
-		return rechargeUpdated;
+		return rechargeDao.save(rechargeUpdated);
 	}
 
 	@Override
@@ -57,8 +56,6 @@ public class RechargeServiceImpl implements RechargeService{
 				rechargeList.add(r);
 			}
 		}
-//		rechargeList = rechargeList.stream().filter((r)->r.getAccount().getAccountId()==account.getAccountId())
-//					.collect(Collectors.toList());
 		Collections.sort(rechargeList,
 			new Comparator<Recharge>(){
 				public int compare(Recharge r1, Recharge r2) {
@@ -92,7 +89,6 @@ public class RechargeServiceImpl implements RechargeService{
 	public int countRechargesInPeriod(LocalDate startDate, LocalDate endDate) {
 		int count=0;
 		List<Recharge> recharge = rechargeDao.findAll();
-		List<Recharge> rechargeList = new ArrayList<Recharge>();
 		for(Recharge r : recharge) {
 			LocalDate date = r.getPurchasedDate();
 			if(date.equals(startDate) || date.equals(endDate) || (date.isAfter(startDate) && date.isBefore(endDate)))
@@ -105,7 +101,6 @@ public class RechargeServiceImpl implements RechargeService{
 	public double totalRevenueInPeriod(LocalDate startDate, LocalDate endDate) {
 		double revenue = 0;
 		List<Recharge> recharge = rechargeDao.findAll();
-		List<Recharge> rechargeList = new ArrayList<Recharge>();
 		for(Recharge r : recharge) {
 			LocalDate date = r.getPurchasedDate();
 			if(date.equals(startDate) || date.equals(endDate) || (date.isAfter(startDate) && date.isBefore(endDate)))
