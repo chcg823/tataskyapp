@@ -20,6 +20,11 @@ public class PackServiceImpl implements PackService {
 	@Override
 	public void addPack(Pack pack) {
 		Pack newPack = new Pack();
+		newPack.setId(pack.getId());
+		newPack.setCost(pack.getCost());
+		newPack.setDaysValidity(pack.getDaysValidity());
+		newPack.setDescription(pack.getDescription());
+		newPack.setPlanName(pack.getPlanName());
 		packDao.save(newPack);
 	}
 	@Override

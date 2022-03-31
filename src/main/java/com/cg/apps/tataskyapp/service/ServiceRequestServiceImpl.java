@@ -29,7 +29,7 @@ public class ServiceRequestServiceImpl implements ServiceRequestService {
         req.setRequestDate(dto.getRequestDate());
         req.setStatusOpened(dto.getStatusOpened());
         serDao.save(req);
-        return req.getMessage();
+        return "service request is created";
     }
 
     @Override

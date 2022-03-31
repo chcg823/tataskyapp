@@ -1,6 +1,7 @@
 package com.cg.apps.tataskyapp.controller;
 
 import com.cg.apps.tataskyapp.entities.Account;
+import com.cg.apps.tataskyapp.entities.Pack;
 import com.cg.apps.tataskyapp.service.AccountService;
 import com.cg.apps.tataskyapp.utils.AccountAlreadyExistException;
 import com.cg.apps.tataskyapp.utils.AccountNotFoundException;
@@ -22,29 +23,22 @@ public class AccountController {
 
     @PostMapping("/add")
     public ResponseEntity<Account> addAccount(@RequestBody Account account) {
-        Account newAcc = accountService.findByAccountId(account.getAccountId());
-		if(newAcc!=null)
-			throw new AccountAlreadyExistException();
-		newAcc = new Account(account);
-		accountService.add(newAcc);
+        Account newAcc = new Account(account);
+        accountService.add(newAcc);
         return new ResponseEntity<>(newAcc, HttpStatus.OK);
     }
 
     @GetMapping("/find/{id}")
     public ResponseEntity<Account> findAccountById(@PathVariable Long id) {
-        Account acc = accountService.findByAccountId(id);
-        if (acc == null)
-            throw new AccountNotFoundException();
-        return new ResponseEntity<>(HttpStatus.OK);
+        Account account = accountService.findByAccountId(id);
+        return new ResponseEntity<>(account, HttpStatus.OK);
     }
 
     @PutMapping("/update")
     public ResponseEntity<Account> updateAccount(@RequestBody Account account) {
-		Account acc = accountService.findByAccountId(account.getAccountId());
-		if(acc==null)
-			throw new AccountNotFoundException();
-        accountService.update(account);
-        return new ResponseEntity<>(acc,HttpStatus.OK);
+        Account acc = new Account(account);
+        accountService.update(acc);
+        return new ResponseEntity<>(acc, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{accountId}")
@@ -56,13 +50,14 @@ public class AccountController {
         return new ResponseEntity<String>(message, header, HttpStatus.OK);
     }
 
-
-    @GetMapping("/greet")
-    public ResponseEntity<String> sayHello() {
-        String message = "Welcome";
-        HttpHeaders header = new HttpHeaders();
-        header.add("desc", "Tata Sky App");
-        return new ResponseEntity<String>(message, header, HttpStatus.OK);
+    @PostMapping("/count/accounts/{startDate}/{endDate}")
+    public ResponseEntity<String> countCreatedAccountsInPeriod(@PathVariable String startDate, @PathVariable String endDate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MM-yyyy");
+        LocalDate startLDate = LocalDate.parse(startDate, formatter);
+        LocalDate endLDate = LocalDate.parse(endDate, formatter);
+        int count = accountService.countCreatedAccountsInPeriod(startLDate, endLDate);
+        String message = "Total no. of accounts created between period " + startDate + " and " + endDate + " is " + count;
+        return new ResponseEntity<String>(message, HttpStatus.OK);
     }
 
     @GetMapping("/count/accounts")
@@ -72,14 +67,18 @@ public class AccountController {
         return new ResponseEntity<String>(message, HttpStatus.OK);
     }
 
-    @PostMapping("/count/accounts/{startDate}/{endDate}")
-    public ResponseEntity<String> countCreatedAccountsInPeriod(@PathVariable String startDate, @PathVariable String endDate) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MM-yyyy");
-        LocalDate startLDate = LocalDate.parse(startDate, formatter);
-        LocalDate endLDate = LocalDate.parse(endDate, formatter);
-        int count = accountService.countCreatedAccountsInPeriod(startLDate, endLDate);
-        String message = "Total no. of accounts created between period " + startDate + " and " + endDate + " is " + count;
-        return new ResponseEntity<String>(message, HttpStatus.OK);
+    @PostMapping("/remove-pack")
+    public ResponseEntity<String> removePackForAccount(Account account, Pack pack) {
+        accountService.removePackFromAccount(account, pack);
+        return new ResponseEntity<>("pack removed", HttpStatus.OK);
+    }
+
+    @GetMapping("/greet")
+    public ResponseEntity<String> sayHello() {
+        String message = "Welcome";
+        HttpHeaders header = new HttpHeaders();
+        header.add("desc", "Tata Sky App");
+        return new ResponseEntity<String>(message, header, HttpStatus.OK);
     }
 
 }

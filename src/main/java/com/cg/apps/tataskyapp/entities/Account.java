@@ -28,7 +28,6 @@ public class Account {
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     private List<ServiceRequest> requests = new ArrayList<>();
 
-    @JsonFormat(pattern = "dd/MM/yyyy", timezone = "Asia/Calcutta")
     @Column
     private LocalDate registeredDate;
 

@@ -61,7 +61,7 @@ public class PackController {
 		return new ResponseEntity<>(p,HttpStatus.OK);
 	}
 	@GetMapping("amount/{amount}")
-	public ResponseEntity<List<Pack>> getPacksGreaterThanAmount(@RequestBody double amount){
+	public ResponseEntity<List<Pack>> getPacksGreaterThanAmount(@PathVariable double amount){
 		List<Pack> packList=packService.findPacksGreaterThanAmount(amount);
 		return new ResponseEntity<>(packList,HttpStatus.OK);
 	}

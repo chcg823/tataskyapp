@@ -16,7 +16,7 @@ public class Users {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Long id;
 	@Column(length = 30)
 	private String username;
 	@Column(length = 30)
@@ -35,7 +35,7 @@ public class Users {
 
 	}
 
-	public Users(int id, String username, String firstName, String lastName, String password, String role,
+	public Users(Long id, String username, String firstName, String lastName, String password, String role,
 			Account account) {
 		super();
 		this.id = id;
@@ -47,11 +47,11 @@ public class Users {
 		this.account = account;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
