@@ -6,9 +6,6 @@ import java.util.List;
 import com.cg.apps.tataskyapp.entities.Account;
 import com.cg.apps.tataskyapp.entities.Pack;
 
-import com.cg.apps.tataskyapp.utils.ApiRequestException;
-import net.bytebuddy.asm.Advice.Local;
-
 public interface AccountService {
 
 	Account add(Account acc);
