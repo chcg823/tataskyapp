@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.cg.apps.tataskyapp.entities.Pack;
 
 @Repository
-public interface PackDao extends JpaRepository<Pack, Integer>{
+public interface PackDao extends JpaRepository<Pack, Long>{
 
 }

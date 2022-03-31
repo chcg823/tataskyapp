@@ -25,6 +25,9 @@ import com.cg.apps.tataskyapp.entities.Recharge;
 import com.cg.apps.tataskyapp.service.AccountService;
 import com.cg.apps.tataskyapp.service.PackService;
 import com.cg.apps.tataskyapp.service.RechargeService;
+import com.cg.apps.tataskyapp.utils.AccountNotFoundException;
+import com.cg.apps.tataskyapp.utils.PackNotFoundException;
+import com.cg.apps.tataskyapp.utils.RechargeNotFoundException;
 
 @RestController
 @RequestMapping("/recharge")
@@ -43,15 +46,15 @@ public class RechargeController {
 		Pack pack = packDao.findById(packId).orElse(null);
 		Account account = accountDao.findById(accountId).orElse(null);
 		if(pack == null) {
-			throw PackNotFoundException)();
+			throw new PackNotFoundException();
 		}
 		if(account == null) {
-			throw AccountNotFoundException();
+			throw new AccountNotFoundException();
 		}
 		Recharge recharge = rechargeService.createRecharge(pack, account);
 		return new ResponseEntity<Recharge>(recharge, HttpStatus.OK);
 	}
-	
+
 	@PutMapping
 	public ResponseEntity<Recharge> update(@RequestBody RechargeDto rechargeDto){
 		Recharge recharge = new Recharge();
@@ -67,60 +70,60 @@ public class RechargeController {
 		recharge.setPurchasedDate(rechargeDto.getPurchasedDate());
 		return new ResponseEntity<Recharge>(rechargeService.update(recharge), HttpStatus.OK);
 	}
-	
+
 	@GetMapping
 	public ResponseEntity<List<Recharge>> findRechargesForUserInDescendingOrderByPurchasedDate(@PathVariable long accountId){
 		Account account = accountDao.findById(accountId).orElse(null);
 		if(account == null) {
-		throw AccountNotFoundException();
+			throw new AccountNotFoundException();
 		}
 		List<Recharge> rechargeInDescendingOrder = rechargeService.findRechargesForUserInDescendingOrderByPurchasedDate(account);
 		return new ResponseEntity<List<Recharge>>(rechargeInDescendingOrder, HttpStatus.OK);
 	}
-	
+
 	@GetMapping
 	public ResponseEntity<Integer> rechargesForUserCount(@PathVariable long accountId){
 		Account account = accountDao.findById(accountId).orElse(null);
 		if(account == null) {
-		throw AccountNotFoundException();
+			throw new AccountNotFoundException();
 		}
 		return new ResponseEntity<Integer>(rechargeService.rechargesForUserCount(account), HttpStatus.OK);
 	}
-	
+
 	@GetMapping
 	public ResponseEntity<List<Recharge>> findAllRechargesInPeriod(@PathVariable LocalDate startDate, @PathVariable LocalDate endDate){
 		List<Recharge> rechargeListInPeriod = rechargeService.findAllRechargesInPeriod(startDate, endDate);
 		return new ResponseEntity<List<Recharge>>(rechargeListInPeriod, HttpStatus.OK);
 	}
-	
+
 	@GetMapping
 	public ResponseEntity<Integer> countRechargesInPeriod(@PathVariable LocalDate startDate, @PathVariable LocalDate endDate){
 		return new ResponseEntity<Integer>(rechargeService.countRechargesInPeriod(startDate, endDate), HttpStatus.OK);
 	}
-	
+
 	@GetMapping
 	public ResponseEntity<Double> totalRevenueInPeriod(@PathVariable LocalDate startDate, @PathVariable LocalDate endDate){
 		return new ResponseEntity<Double>(rechargeService.totalRevenueInPeriod(startDate, endDate), HttpStatus.OK);
 	}
-	
+
 	@GetMapping
 	public ResponseEntity<Integer> rechargesCount(@PathVariable long packId){
 		Pack pack = packDao.findById(packId).orElse(null);
 		if(pack == null) {
-			throw PackNotFoundException)();
+			throw new PackNotFoundException();
 		}
 		return new ResponseEntity<Integer>(rechargeService.rechargesCount(pack), HttpStatus.OK);
 	}
-	
+
 	@GetMapping
 	public ResponseEntity<String> expireIfValidityFinished(@PathVariable long accountId, @PathVariable long rechargeId){
 		Account account = accountDao.findById(accountId).orElse(null);
 		Recharge recharge = rechargeDao.findById(rechargeId).orElse(null);
 		if(recharge == null) {
-			throw RechargeNotFoundException)();
+			throw new RechargeNotFoundException();
 		}
 		if(account == null) {
-			throw AccountNotFoundException();
+			throw new AccountNotFoundException();
 		}
 		String message = rechargeService.expireIfValidityFinished(account, recharge);
 		return new ResponseEntity<String>(message, HttpStatus.OK);
