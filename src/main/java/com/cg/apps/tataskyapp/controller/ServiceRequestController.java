@@ -14,11 +14,6 @@ import com.cg.apps.tataskyapp.service.ServiceRequestService;
 public class ServiceRequestController {
 	@Autowired
 	ServiceRequestService srService;
-	
-	@PostMapping
-	public String addUser(@RequestBody ServiceRequest sr) {
-		srService.addServiceRequest(sr);
-		return "User added";
-	}
+
 	
 }

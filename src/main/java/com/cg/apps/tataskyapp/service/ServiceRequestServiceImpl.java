@@ -1,21 +1,53 @@
 package com.cg.apps.tataskyapp.service;
 
+import com.cg.apps.tataskyapp.dao.AccountDao;
+import com.cg.apps.tataskyapp.dao.ServiceRequestDao;
+import com.cg.apps.tataskyapp.dto.ServiceRequestDto;
+import com.cg.apps.tataskyapp.entities.Account;
+import com.cg.apps.tataskyapp.entities.ServiceRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cg.apps.tataskyapp.dao.ServiceRequestDao;
-import com.cg.apps.tataskyapp.entities.ServiceRequest;
+import java.util.List;
+import java.util.Optional;
 
 @Service
-public class ServiceRequestServiceImpl implements ServiceRequestService{
+public class ServiceRequestServiceImpl implements ServiceRequestService {
 
-	@Autowired
-	ServiceRequestDao srDao;
-	
-	@Override
-	public void addServiceRequest(ServiceRequest sr) {
-		// TODO Auto-generated method stub
-		srDao.save(sr);
-	}
-	
+    @Autowired
+    ServiceRequestDao serDao;
+    @Autowired
+    AccountDao accDao;
+
+    @Override
+    public String createServiceRequestForUser(ServiceRequestDto dto) {
+        Optional<Account> opt = accDao.findById(dto.getAccount_id());
+        Account acc = opt.get();
+        ServiceRequest req = new ServiceRequest();
+        req.setAccount(acc);
+        req.setMessage("service request is created");
+        req.setRequestDate(dto.getRequestDate());
+        req.setStatusOpened(dto.getStatusOpened());
+        serDao.save(req);
+        return req.getMessage();
+    }
+
+    @Override
+    public List<ServiceRequest> openedServiceRequest(Long accountId) {
+        Optional<Account> opt = accDao.findById(accountId);
+        Account acc = opt.get();
+        List<ServiceRequest> reqlist = acc.getRequests();
+        return reqlist;
+    }
+
+    @Override
+    public ServiceRequest close(Long serviceRequestId) {
+        Optional<ServiceRequest> opt = serDao.findById(serviceRequestId);
+        ServiceRequest req = opt.get();
+        req.setStatusOpened(false);
+        req.setMessage("request is closed");
+        serDao.save(req);
+        return req;
+    }
+
 }

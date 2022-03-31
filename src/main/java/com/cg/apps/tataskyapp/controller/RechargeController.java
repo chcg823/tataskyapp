@@ -1,6 +1,7 @@
 package com.cg.apps.tataskyapp.controller;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,7 +42,7 @@ public class RechargeController {
 	@Autowired
 	RechargeDao rechargeDao;
 
-	@PostMapping
+	@PostMapping("/create/{packId}/{accountId}")
 	public ResponseEntity<Recharge> createRecharge(@PathVariable long packId, @PathVariable long accountId){
 		Pack pack = packDao.findById(packId).orElse(null);
 		Account account = accountDao.findById(accountId).orElse(null);
@@ -55,7 +56,7 @@ public class RechargeController {
 		return new ResponseEntity<Recharge>(recharge, HttpStatus.OK);
 	}
 
-	@PutMapping
+	@PutMapping("/update")
 	public ResponseEntity<Recharge> update(@RequestBody RechargeDto rechargeDto){
 		Recharge recharge = new Recharge();
 		recharge.setAccount(accountDao.findById(rechargeDto.getAccountId()).orElse(null));
@@ -71,7 +72,7 @@ public class RechargeController {
 		return new ResponseEntity<Recharge>(rechargeService.update(recharge), HttpStatus.OK);
 	}
 
-	@GetMapping
+	@GetMapping("/find/by-date/{accountId}")
 	public ResponseEntity<List<Recharge>> findRechargesForUserInDescendingOrderByPurchasedDate(@PathVariable long accountId){
 		Account account = accountDao.findById(accountId).orElse(null);
 		if(account == null) {
@@ -81,7 +82,7 @@ public class RechargeController {
 		return new ResponseEntity<List<Recharge>>(rechargeInDescendingOrder, HttpStatus.OK);
 	}
 
-	@GetMapping
+	@GetMapping("/find/{accountId}")
 	public ResponseEntity<Integer> rechargesForUserCount(@PathVariable long accountId){
 		Account account = accountDao.findById(accountId).orElse(null);
 		if(account == null) {
@@ -90,23 +91,23 @@ public class RechargeController {
 		return new ResponseEntity<Integer>(rechargeService.rechargesForUserCount(account), HttpStatus.OK);
 	}
 
-	@GetMapping
+	@GetMapping("/find/period/{startDate}-{endDate}")
 	public ResponseEntity<List<Recharge>> findAllRechargesInPeriod(@PathVariable LocalDate startDate, @PathVariable LocalDate endDate){
 		List<Recharge> rechargeListInPeriod = rechargeService.findAllRechargesInPeriod(startDate, endDate);
 		return new ResponseEntity<List<Recharge>>(rechargeListInPeriod, HttpStatus.OK);
 	}
 
-	@GetMapping
+	@GetMapping("/count/period/{startDate}-{endDate}")
 	public ResponseEntity<Integer> countRechargesInPeriod(@PathVariable LocalDate startDate, @PathVariable LocalDate endDate){
 		return new ResponseEntity<Integer>(rechargeService.countRechargesInPeriod(startDate, endDate), HttpStatus.OK);
 	}
 
-	@GetMapping
+	@GetMapping("/revenue/{startDate}-{endDate}")
 	public ResponseEntity<Double> totalRevenueInPeriod(@PathVariable LocalDate startDate, @PathVariable LocalDate endDate){
 		return new ResponseEntity<Double>(rechargeService.totalRevenueInPeriod(startDate, endDate), HttpStatus.OK);
 	}
 
-	@GetMapping
+	@GetMapping("/count/{packId}")
 	public ResponseEntity<Integer> rechargesCount(@PathVariable long packId){
 		Pack pack = packDao.findById(packId).orElse(null);
 		if(pack == null) {
@@ -115,7 +116,7 @@ public class RechargeController {
 		return new ResponseEntity<Integer>(rechargeService.rechargesCount(pack), HttpStatus.OK);
 	}
 
-	@GetMapping
+	@GetMapping("/expire/{accountId}/{rechargeId}")
 	public ResponseEntity<String> expireIfValidityFinished(@PathVariable long accountId, @PathVariable long rechargeId){
 		Account account = accountDao.findById(accountId).orElse(null);
 		Recharge recharge = rechargeDao.findById(rechargeId).orElse(null);

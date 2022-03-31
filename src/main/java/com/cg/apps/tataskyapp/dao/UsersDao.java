@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.cg.apps.tataskyapp.entities.Users;
 
 @Repository
-public interface UsersDao extends JpaRepository<Users, Integer>{
+public interface UsersDao extends JpaRepository<Users, Long>{
 
 }

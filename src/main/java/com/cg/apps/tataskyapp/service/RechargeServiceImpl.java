@@ -127,7 +127,7 @@ public class RechargeServiceImpl implements RechargeService{
 		LocalDate validDate = rechargeDate.plusDays(recharge.getDaysValidity());
 		if(validDate.isBefore(date)) {
 			recharge.setActive(false);
-			account.setPack(null);
+			account.setCurrentPack(null);
 			return "Validity Expired";
 		}else {
 			return "Validity not Expired";

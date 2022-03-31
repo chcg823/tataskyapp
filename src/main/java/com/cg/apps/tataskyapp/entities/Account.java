@@ -1,5 +1,7 @@
 package com.cg.apps.tataskyapp.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -26,6 +28,7 @@ public class Account {
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     private List<ServiceRequest> requests = new ArrayList<>();
 
+    @JsonFormat(pattern = "dd/MM/yyyy", timezone = "Asia/Calcutta")
     @Column
     private LocalDate registeredDate;
 
@@ -99,6 +102,17 @@ public class Account {
 
     public void setCurrentPack(Pack currentPack) {
         this.currentPack = currentPack;
+    }
+
+    public void copy(Account account) {
+
+        this.accountId = account.getAccountId();
+        this.users = account.getUsers();
+        this.recharges = account.getRecharges();
+        this.registeredDate = account.getRegisteredDate();
+        this.requests = account.getRequests();
+        this.currentPack = account.getCurrentPack();
+
     }
 
     @Override
