@@ -1,5 +1,6 @@
 package com.cg.apps.tataskyapp.controller;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,13 @@ public class AccountController {
 	public ResponseEntity<String> countAccount(){
 		int count = accountService.countAccounts();
 		String message = "Total no. of accounts: "+count;
+		return new ResponseEntity<String>(message, HttpStatus.OK);
+	}
+
+	@GetMapping("/count/accounts/{startDate}-{endDate}")
+	public ResponseEntity<String> countCreatedAccountsInPeriod(@PathVariable LocalDate startDate, @PathVariable LocalDate endDate) {
+		int count = accountService.countCreatedAccountsInPeriod(startDate, endDate);
+		String message = "Total no. of accounts created between period is :"+startDate.toString()+endDate.toString();
 		return new ResponseEntity<String>(message, HttpStatus.OK);
 	}
 

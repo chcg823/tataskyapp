@@ -50,7 +50,7 @@ public class AccountServiceImpl implements AccountService{
 	}
 	@Override
 	public int countCreatedAccounts(LocalDate startDate, LocalDate endDate) {
-		// TODO Auto-generated method stub
+		int c = accDao.countCreatedAccountsInPeriod(startDate, endDate);
 		return 0;
 	}
 	@Override
