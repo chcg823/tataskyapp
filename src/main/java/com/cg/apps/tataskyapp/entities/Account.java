@@ -33,6 +33,27 @@ public class Account {
 
     }
 
+<<<<<<< HEAD
+	public Account(Long accountId, Users users, List<Recharge> recharges, Pack pack, List<ServiceRequest> requests,
+			LocalDate registeredDate) {
+		this.accountId = accountId;
+		this.users = users;
+		this.recharges = recharges;
+		//this.pack = pack;
+		this.currentPack = pack;
+		this.requests = requests;
+		this.registeredDate = registeredDate;
+	}
+	
+	public Account(Account acc) {
+		this.accountId = acc.accountId;
+		this.users =acc.users;
+		this.recharges = acc.recharges;
+		this.currentPack = acc.currentPack;
+		this.requests = acc.requests;
+		this.registeredDate = acc.registeredDate;
+	}
+=======
     public Account(Long accountId, Users users, List<Recharge> recharges, Pack pack, List<ServiceRequest> requests,
                    LocalDate registeredDate) {
         this.accountId = accountId;
@@ -42,6 +63,7 @@ public class Account {
         this.requests = requests;
         this.registeredDate = registeredDate;
     }
+>>>>>>> 96d01ec3b7fdca8cd651b47359f9e550470765c6
 
     public Account(Account acc) {
         this.accountId = acc.accountId;
@@ -72,6 +94,31 @@ public class Account {
         return recharges;
     }
 
+<<<<<<< HEAD
+	public Pack getPack() {
+		return currentPack;
+	}
+
+	public void setPack(Pack pack) {
+		this.currentPack = pack;
+	}
+
+	public void addRecharge(Recharge recharge) {
+		recharges.add(recharge);
+	}
+
+//	public User getUser() {
+//		return user;
+//	}
+//
+//	public void setUser(User user) {
+//		this.user = user;
+//	}
+
+	public List<ServiceRequest> getRequests() {
+		return requests;
+	}
+=======
     public void setRecharges(List<Recharge> recharges) {
         this.recharges = recharges;
     }
@@ -79,6 +126,7 @@ public class Account {
     public void addRecharge(Recharge recharge) {
         recharges.add(recharge);
     }
+>>>>>>> 96d01ec3b7fdca8cd651b47359f9e550470765c6
 
     public List<ServiceRequest> getRequests() {
         return requests;
