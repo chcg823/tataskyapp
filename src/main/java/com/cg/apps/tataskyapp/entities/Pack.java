@@ -2,13 +2,16 @@ package com.cg.apps.tataskyapp.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "packTable")
+@Table(name = "pack")
 public class Pack {
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@Column(length = 15)
 	private Double cost;
@@ -19,8 +22,15 @@ public class Pack {
 	@Column(length = 15)
 	private String planName;
 
-//	@Column(length = 15)
+//	@Column
 //	private List<String> channels;
+
+
+	public Pack() {
+		
+	}
+	
+
 	public Long getId() {
 		return id;
 	}
