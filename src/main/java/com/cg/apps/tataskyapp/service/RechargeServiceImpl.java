@@ -23,7 +23,6 @@ public class RechargeServiceImpl implements RechargeService{
 	@Override
 	public Recharge createRecharge(Pack pack, Account account) {
 		Recharge recharge = new Recharge();
-		
 		LocalDate date = LocalDate.now();
 		recharge.setAccount(account);
 		recharge.setAmount(pack.getCost());
@@ -32,6 +31,9 @@ public class RechargeServiceImpl implements RechargeService{
 		recharge.setPlanName(pack.getPlanName());
 		recharge.setPurchasedDate(date);
 		recharge.setActive(true);
+		List<Recharge> rechargeList = account.getRecharges();
+		rechargeList.add(recharge);
+		account.setRecharges(rechargeList);
 		return rechargeDao.save(recharge);
 	}
 

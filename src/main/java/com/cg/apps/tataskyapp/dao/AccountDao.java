@@ -12,4 +12,6 @@ import java.time.LocalDate;
 public interface AccountDao extends JpaRepository<Account, Long>{
     @Query("select count(a.accountId) from Account a where a.registeredDate between :startDate and :endDate")
     int countCreatedAccountsInPeriod(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+    @Query(value="select acc from Account acc where acc.accountId=?1")
+    public Account getAccById(long accountId);
 }

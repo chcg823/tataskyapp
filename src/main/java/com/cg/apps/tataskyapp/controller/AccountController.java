@@ -1,9 +1,11 @@
 package com.cg.apps.tataskyapp.controller;
 
+import com.cg.apps.tataskyapp.dao.UsersDao;
 import com.cg.apps.tataskyapp.dto.*;
 import com.cg.apps.tataskyapp.entities.*;
 import com.cg.apps.tataskyapp.service.AccountService;
 import com.cg.apps.tataskyapp.utils.PackNotFoundException;
+import com.cg.apps.tataskyapp.utils.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,11 +23,12 @@ public class AccountController {
 
     @Autowired
     AccountService accountService;
+    UsersDao usersDao;
 
     @PostMapping("/add")
     public ResponseEntity<Account> addAccount(@RequestBody Account account) {
-        Account newAcc = accountService.add(account);
-        return new ResponseEntity<>(newAcc, HttpStatus.OK);
+        accountService.add(account);
+        return new ResponseEntity<>(account, HttpStatus.OK);
     }
 
     @GetMapping("/find/{id}")
@@ -35,7 +38,7 @@ public class AccountController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<AccountTo> updateAccount(@RequestBody Account account) {
+    public ResponseEntity<String> updateAccount(@RequestBody Account account) {
         Account acc = accountService.update(account);
         AccountTo accountTo = new AccountTo(acc);
         Users user = account.getUsers();
@@ -51,7 +54,7 @@ public class AccountController {
             serviceRequestTos.add(new ServiceRequestTo(serviceRequest));
         accountTo.setRequests(serviceRequestTos);
         accountTo.setRecharges(rechargeToForAccs);
-        return new ResponseEntity<>(accountTo, HttpStatus.OK);
+        return new ResponseEntity<>("Account updated", HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{accountId}")

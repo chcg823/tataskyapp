@@ -1,17 +1,23 @@
 package com.cg.apps.tataskyapp.dto;
 
+import com.cg.apps.tataskyapp.entities.Users;
+
+import java.time.LocalDate;
+
 public class AccountDto {
 
     public Long id;
-    public Long userId;
+    public Users user;
+    public LocalDate registredDate;
 
     public AccountDto() {
 
     }
 
-    public AccountDto(Long id, Long userId) {
+    public AccountDto(Long id, Users user, LocalDate registredDate) {
         this.id = id;
-        this.userId = userId;
+        this.user = user;
+        this.registredDate = registredDate;
     }
 
     public Long getId() {
@@ -22,11 +28,19 @@ public class AccountDto {
         this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Users getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(Users user) {
+        this.user = user;
+    }
+
+    public LocalDate getRegistredDate() {
+        return registredDate;
+    }
+
+    public void setRegistredDate(LocalDate registredDate) {
+        this.registredDate = registredDate;
     }
 }

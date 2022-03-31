@@ -1,10 +1,5 @@
 package com.cg.apps.tataskyapp.entities;
 
-import com.cg.apps.tataskyapp.dao.UsersDao;
-import com.cg.apps.tataskyapp.dto.AccountDto;
-import com.cg.apps.tataskyapp.dto.AccountTo;
-import com.cg.apps.tataskyapp.service.UsersService;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
