@@ -48,6 +48,7 @@ public class AccountController {
         newAccount.setRegisteredDate(accountDto.getRegisteredDate());
         user.setAccount(newAccount);
         newAccount.setUsers(user);
+        newAccount.setCurrentPack(packService.findPackById(accountDto.getPackId()));
         accountService.add(newAccount);
         return new ResponseEntity<>(newAccount, HttpStatus.OK);
     }
@@ -59,7 +60,7 @@ public class AccountController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<String> updateAccount(@RequestBody AccountDto accountDto) {
+    public ResponseEntity<Account> updateAccount(@RequestBody AccountDto accountDto) {
         Account acc = accountService.findByAccountId(accountDto.getId());
         if(acc==null)
             addAccount(accountDto);
@@ -70,7 +71,7 @@ public class AccountController {
         Pack pack =  packService.findPackById(accountDto.getPackId());
         acc.setCurrentPack(pack);
         accountService.update(acc);
-        return new ResponseEntity<>(acc.toString(), HttpStatus.OK);
+        return new ResponseEntity<>(acc, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{accountId}")
@@ -97,12 +98,11 @@ public class AccountController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    @PostMapping("/remove-pack")
-    public ResponseEntity<String> removePackForAccount(Long accoundId, Long packId) {
-        Account acc = accountService.findByAccountId(accoundId);
-        if(acc.getCurrentPack().getId()!=packId)
-            throw new PackNotFoundException();
-        accountService.removePackFromAccount(acc, acc.getCurrentPack());
+    @PostMapping("/remove-pack/{accountId}/{packId}")
+    public ResponseEntity<String> removePackForAccount(@PathVariable Long accountId,@PathVariable Long packId) {
+        Account account = accountService.findByAccountId(accountId);
+        Pack pack = packService.findPackById(packId);
+        accountService.removePackFromAccount(account, pack);
         return new ResponseEntity<>("pack removed", HttpStatus.OK);
     }
 

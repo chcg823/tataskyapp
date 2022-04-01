@@ -2,12 +2,14 @@ package com.cg.apps.tataskyapp.service;
 
 import com.cg.apps.tataskyapp.dao.AccountDao;
 import com.cg.apps.tataskyapp.dao.PackDao;
+import com.cg.apps.tataskyapp.dao.UsersDao;
 import com.cg.apps.tataskyapp.dto.AccountTo;
 import com.cg.apps.tataskyapp.entities.Account;
 import com.cg.apps.tataskyapp.entities.Pack;
 import com.cg.apps.tataskyapp.utils.AccountAlreadyExistException;
 import com.cg.apps.tataskyapp.utils.AccountNotFoundException;
 import com.cg.apps.tataskyapp.utils.PackNotFoundException;
+import com.cg.apps.tataskyapp.utils.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Autowired
     PackDao packDao;
+
+    @Autowired
+    UsersDao usersDao;
 
     @Override
     public Account add(Account acc) {
@@ -42,7 +47,9 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account update(Account account) {
         Account acc = new Account(account);
-        accDao.save(acc);
+        if(!usersDao.existsById(account.getUsers().getId()))
+            throw new UserNotFoundException();
+        accDao.save(account);
         return acc;
     }
 
@@ -73,10 +80,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void removePackFromAccount(Account account, Pack pack) {
-        if(!accDao.existsById(account.getAccountId()))
-            throw new AccountNotFoundException();
-        if(!packDao.existsById(pack.getId()) || !account.getCurrentPack().equals(pack))
+        if(packDao.existsById(pack.getId()))
             throw new PackNotFoundException();
         account.setCurrentPack(null);
+        accDao.save(account);
     }
 }

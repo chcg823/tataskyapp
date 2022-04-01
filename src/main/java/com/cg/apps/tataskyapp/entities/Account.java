@@ -33,25 +33,25 @@ public class Account {
 
     }
 
-	public Account(Long accountId, Users users, List<Recharge> recharges, Pack pack, List<ServiceRequest> requests,
-			LocalDate registeredDate) {
-		this.accountId = accountId;
-		this.users = users;
-		this.recharges = recharges;
-		//this.pack = pack;
-		this.currentPack = pack;
-		this.requests = requests;
-		this.registeredDate = registeredDate;
-	}
-	
-	public Account(Account acc) {
-		this.accountId = acc.accountId;
-		this.users =acc.users;
-		this.recharges = acc.recharges;
-		this.currentPack = acc.currentPack;
-		this.requests = acc.requests;
-		this.registeredDate = acc.registeredDate;
-	}
+    public Account(Long accountId, Users users, List<Recharge> recharges, Pack pack, List<ServiceRequest> requests,
+                   LocalDate registeredDate) {
+        this.accountId = accountId;
+        this.users = users;
+        this.recharges = recharges;
+        //this.pack = pack;
+        this.currentPack = pack;
+        this.requests = requests;
+        this.registeredDate = registeredDate;
+    }
+
+    public Account(Account acc) {
+        this.accountId = acc.accountId;
+        this.users = acc.users;
+        this.recharges = acc.recharges;
+        this.currentPack = acc.currentPack;
+        this.requests = acc.requests;
+        this.registeredDate = acc.registeredDate;
+    }
 
 
     public Long getAccountId() {
@@ -111,11 +111,6 @@ public class Account {
         this.requests = account.getRequests();
         this.currentPack = account.getCurrentPack();
 
-    }
-
-    @Override
-    public String toString() {
-        return "Account [accountId=" + accountId + ",  registeredDate=" + registeredDate + "]";
     }
 
 
