@@ -115,7 +115,7 @@ public class Account {
 
     @Override
     public String toString() {
-        return "Account [accountId=" + accountId + ", users=" + users + ", recharges=" + recharges + ", currentPack="
+        return "Account [accountId=" + accountId + ", users=" + users.getUsername() + ", recharges=" + recharges + ", currentPack="
                 + currentPack + ", requests=" + requests + ", registeredDate=" + registeredDate + "]";
     }
 

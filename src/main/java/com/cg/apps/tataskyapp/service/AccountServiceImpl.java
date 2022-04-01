@@ -5,6 +5,7 @@ import com.cg.apps.tataskyapp.dto.AccountTo;
 import com.cg.apps.tataskyapp.entities.Account;
 import com.cg.apps.tataskyapp.entities.Pack;
 import com.cg.apps.tataskyapp.utils.AccountAlreadyExistException;
+import com.cg.apps.tataskyapp.utils.AccountNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +20,10 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account add(Account acc) {
-//        if(accDao.existsById(acc.getId()))
-//            throw new AccountAlreadyExistException();
-        Account newAcc = new Account(acc);
-        accDao.save(newAcc);
-        return newAcc;
+        if(accDao.existsById(acc.getAccountId()))
+            throw new AccountAlreadyExistException();
+        accDao.save(acc);
+        return acc;
     }
 
     @Override
@@ -43,7 +43,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void deleteByAccountId(Long accountId) {
-        accDao.deleteById(accountId);
+        if(!accDao.existsById(accountId))
+            throw new AccountNotFoundException();
+        accDao.delete(accDao.getAccById(accountId));
     }
 
     @Override

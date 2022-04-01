@@ -8,7 +8,7 @@ import com.cg.apps.tataskyapp.entities.Pack;
 import com.cg.apps.tataskyapp.entities.Recharge;
 
 public interface RechargeService {
-	
+
 	Recharge createRecharge(Pack pack, Account account);
 	Recharge update(Recharge recharge);
 	List<Recharge> findRechargesForUserInDescendingOrderByPurchasedDate(Account account);

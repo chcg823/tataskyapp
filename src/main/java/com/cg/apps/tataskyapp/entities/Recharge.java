@@ -35,6 +35,7 @@ public class Recharge {
 	@Column
 	private LocalDate purchasedDate;
 	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "pack_id")
 	private Pack pack;
 	@ElementCollection
 	private List<String> channels;
@@ -45,7 +46,7 @@ public class Recharge {
 	}
 
 	public Recharge(long id, Account account, double amount, int daysValidity, String planDescription, String planName,
-			LocalDate purchasedDate,Pack pack, List<String> channels, boolean active) {
+					LocalDate purchasedDate,Pack pack, List<String> channels, boolean active) {
 		this.id = id;
 		this.account = account;
 		this.amount = amount;

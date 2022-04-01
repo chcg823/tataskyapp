@@ -9,11 +9,11 @@ public interface UsersService {
 
     void updateUsers(UsersDto usr);
 
-    Users findUsersById(int id);
+    Users findUsersById(Long id);
 
     Users findUsersByUsername(String username);
 
-    void deleteUsersByUserId(int id);
+    void deleteUsersByUserId(Long id);
 
 
 }

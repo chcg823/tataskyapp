@@ -1,5 +1,6 @@
 package com.cg.apps.tataskyapp.service;
 
+import com.cg.apps.tataskyapp.dto.AccountDto;
 import com.cg.apps.tataskyapp.dto.AccountTo;
 import com.cg.apps.tataskyapp.entities.Account;
 import com.cg.apps.tataskyapp.entities.Pack;
@@ -9,7 +10,7 @@ import java.time.LocalDate;
 
 public interface AccountService {
 
-    Account add(Account acc);
+    Account add(Account account);
 
     Account update(Account account);
 

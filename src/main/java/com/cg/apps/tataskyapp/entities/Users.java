@@ -102,7 +102,17 @@ public class Users {
 	public void setAccount(Account account) {
 		this.account = account;
 	}
-	
-	
 
+	@Override
+	public String toString() {
+		return "Users{" +
+				"id=" + id +
+				", username='" + username + '\'' +
+				", firstName='" + firstName + '\'' +
+				", lastName='" + lastName + '\'' +
+				", password='" + password + '\'' +
+				", role='" + role + '\'' +
+				", account=" + account +
+				'}';
+	}
 }

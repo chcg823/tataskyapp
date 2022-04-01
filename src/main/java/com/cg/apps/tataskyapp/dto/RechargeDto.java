@@ -15,13 +15,13 @@ public class RechargeDto {
 	private LocalDate purchasedDate;
 	private List<String> channels;
 	private boolean active;
-	
+
 	public RechargeDto() {
-		
+
 	}
 
 	public RechargeDto(long rechargeId, long accountId, long packId, double amount, int daysValidity,
-			String planDescription, String planName, LocalDate purchasedDate, List<String> channels, boolean active) {
+					   String planDescription, String planName, LocalDate purchasedDate, List<String> channels, boolean active) {
 		this.rechargeId = rechargeId;
 		this.accountId = accountId;
 		this.packId = packId;

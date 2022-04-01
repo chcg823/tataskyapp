@@ -4,6 +4,7 @@ import com.cg.apps.tataskyapp.dao.UsersDao;
 import com.cg.apps.tataskyapp.dto.*;
 import com.cg.apps.tataskyapp.entities.*;
 import com.cg.apps.tataskyapp.service.AccountService;
+import com.cg.apps.tataskyapp.service.UsersService;
 import com.cg.apps.tataskyapp.utils.PackNotFoundException;
 import com.cg.apps.tataskyapp.utils.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,18 +24,28 @@ public class AccountController {
 
     @Autowired
     AccountService accountService;
-    UsersDao usersDao;
+
+    @Autowired
+    UsersService usersService;
 
     @PostMapping("/add")
-    public ResponseEntity<Account> addAccount(@RequestBody Account account) {
-        accountService.add(account);
-        return new ResponseEntity<>(account, HttpStatus.OK);
+    public ResponseEntity<Account> addAccount(@RequestBody AccountDto accountDto) {
+        Users user = usersService.findUsersById(accountDto.getUserId());
+        if(user==null)
+            throw new UserNotFoundException();
+        Account newAccount = new Account();
+        newAccount.setAccountId(accountDto.getId());
+        newAccount.setRegisteredDate(accountDto.getRegisteredDate());
+        user.setAccount(newAccount);
+        newAccount.setUsers(user);
+        accountService.add(newAccount);
+        return new ResponseEntity<>(newAccount, HttpStatus.OK);
     }
 
     @GetMapping("/find/{id}")
-    public ResponseEntity<Account> findAccountById(@PathVariable Long id) {
+    public ResponseEntity<String> findAccountById(@PathVariable Long id) {
         Account acc = accountService.findByAccountId(id);
-        return new ResponseEntity<>(acc, HttpStatus.OK);
+        return new ResponseEntity<>(acc.toString(), HttpStatus.OK);
     }
 
     @PutMapping("/update")
@@ -60,10 +71,8 @@ public class AccountController {
     @DeleteMapping("/delete/{accountId}")
     public ResponseEntity<String> deleteAccountById(@PathVariable Long accountId) {
         accountService.deleteByAccountId(accountId);
-        HttpHeaders header = new HttpHeaders();
-        header.add("desc", "delete account by id");
         String message = "Account deleted";
-        return new ResponseEntity<>(message, header, HttpStatus.OK);
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
     @PostMapping("/count/accounts/{startDate}/{endDate}")

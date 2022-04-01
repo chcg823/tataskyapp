@@ -5,6 +5,7 @@ import com.cg.apps.tataskyapp.dao.UsersDao;
 import com.cg.apps.tataskyapp.dto.UsersDto;
 import com.cg.apps.tataskyapp.entities.Account;
 import com.cg.apps.tataskyapp.entities.Users;
+import com.cg.apps.tataskyapp.utils.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,17 +28,13 @@ public class UsersServiceImpl implements UsersService {
     // give the newly created account id//
     @Override
     public void registerUsers(UsersDto usr) {
-        Account acc = accountDao.getAccById(usr.getAccountId());
         Users usrs = new Users();
         usrs.setUsername(usr.getUsername());
         usrs.setFirstName(usr.getFirstName());
         usrs.setLastName(usr.getLastName());
         usrs.setPassword(usr.getPassword());
         usrs.setRole(usr.getRole());
-        usrs.setAccount(acc);
         usersDao.save(usrs);
-
-
     }
 
     //must give same account and users id as before record... if not you will get error//
@@ -57,16 +54,15 @@ public class UsersServiceImpl implements UsersService {
 
 
     @Override
-    public void deleteUsersByUserId(int id) {
+    public void deleteUsersByUserId(Long id) {
         usersDao.deleteById(id);
     }
 
 
     //////why account is getting null??????///////
     @Override
-    public Users findUsersById(int id) {
-        Optional<Users> opt = usersDao.findById(id);
-        Users usr = opt.get();
+    public Users findUsersById(Long id) {
+        Users usr = usersDao.findById(id).orElse(null);
         return usr;
     }
 

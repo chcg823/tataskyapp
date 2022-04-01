@@ -12,9 +12,9 @@ import org.springframework.stereotype.Repository;
 import com.cg.apps.tataskyapp.entities.Users;
 
 @Repository
-public interface UsersDao extends JpaRepository<Users, Integer> {
-    @Query(value="select urs from Users urs where urs.id=?1")
-    public Optional<Users> findById(int id);
+public interface UsersDao extends JpaRepository<Users, Long> {
+//    @Query(value="select urs from Users urs where urs.id=?1")
+//    public Optional<Users> findById(int id);
 
     @Query(value="select urs from Users urs where urs.username=?1")
 

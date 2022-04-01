@@ -3,19 +3,18 @@ package com.cg.apps.tataskyapp.dto;
 public class UsersDto {
 
 
-    private int id;
+    private Long id;
     private String username;
     private String firstName;
     private String lastName;
     private String password;
     private String role;
-    private int accountId;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -57,14 +56,6 @@ public class UsersDto {
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    public int getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(int accountId) {
-        this.accountId = accountId;
     }
 
 

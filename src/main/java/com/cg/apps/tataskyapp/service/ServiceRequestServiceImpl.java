@@ -25,7 +25,7 @@ public class ServiceRequestServiceImpl implements ServiceRequestService {
         Account acc = opt.get();
         ServiceRequest req = new ServiceRequest();
         req.setAccount(acc);
-        req.setMessage("service request is created");
+        req.setMessage(dto.getMessage());
         req.setRequestDate(dto.getRequestDate());
         req.setStatusOpened(dto.getStatusOpened());
         serDao.save(req);

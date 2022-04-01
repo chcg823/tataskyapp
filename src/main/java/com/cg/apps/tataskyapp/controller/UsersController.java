@@ -1,4 +1,4 @@
-package com.cg.apps.tataskyapp.controllers;
+package com.cg.apps.tataskyapp.controller;
 
 
 
@@ -52,8 +52,8 @@ public class UsersController {
 
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Users> findUsersById(@PathVariable int id){
+    @GetMapping("/find-id/{id}")
+    public ResponseEntity<Users> findUsersById(@PathVariable Long id){
         Users newUsers = usersService.findUsersById(id);
         if(newUsers == null)
             throw new UserNotFoundException();
@@ -62,16 +62,15 @@ public class UsersController {
     }
 
     @GetMapping("/{username}")
-    public ResponseEntity<String> findUsersByUsername(@PathVariable String username){
+    public ResponseEntity<Users> findUsersByUsername(@PathVariable String username){
         Users newUsers = usersService.findUsersByUsername(username);
         if(newUsers == null)
             throw new UserNotFoundException();
-        else
-            return new ResponseEntity<String>("User details....",HttpStatus.OK);
+        return new ResponseEntity<>(newUsers,HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUsersByUserId(@PathVariable int id){
+    @DeleteMapping("/delete-id/{id}")
+    public ResponseEntity<String> deleteUsersByUserId(@PathVariable Long id){
         Users newUsers = usersService.findUsersById(id);
         if(newUsers == null)
             throw new UserNotFoundException();

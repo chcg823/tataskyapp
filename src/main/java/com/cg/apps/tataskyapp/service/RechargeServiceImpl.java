@@ -1,138 +1,89 @@
 package com.cg.apps.tataskyapp.service;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.cg.apps.tataskyapp.dao.RechargeDao;
 import com.cg.apps.tataskyapp.entities.Account;
 import com.cg.apps.tataskyapp.entities.Pack;
 import com.cg.apps.tataskyapp.entities.Recharge;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Service
-public class RechargeServiceImpl implements RechargeService{
+public class RechargeServiceImpl implements RechargeService {
 
-	@Autowired
-	RechargeDao rechargeDao;
+    @Autowired
+    RechargeDao rechargeDao;
 
-	@Override
-	public Recharge createRecharge(Pack pack, Account account) {
-		Recharge recharge = new Recharge();
-		LocalDate date = LocalDate.now();
-		recharge.setAccount(account);
-		recharge.setAmount(pack.getCost());
-		recharge.setDaysValidity(pack.getDaysValidity());
-		recharge.setPlanDescription(pack.getDescription());
-		recharge.setPlanName(pack.getPlanName());
-		recharge.setPurchasedDate(date);
-		recharge.setActive(true);
-		List<Recharge> rechargeList = account.getRecharges();
-		rechargeList.add(recharge);
-		account.setRecharges(rechargeList);
-		return rechargeDao.save(recharge);
-	}
+    @Override
+    public Recharge createRecharge(Pack pack, Account account) {
+        Recharge recharge = new Recharge();
 
-	@Override
-	public Recharge update(Recharge recharge) {
-		Recharge rechargeUpdated = new Recharge();
-		rechargeDao.deleteById(recharge.getId());
-		rechargeUpdated.setAccount(recharge.getAccount());
-		rechargeUpdated.setAmount(recharge.getAmount());
-		rechargeUpdated.setDaysValidity(recharge.getDaysValidity());
-		rechargeUpdated.setPlanDescription(recharge.getPlanDescription());
-		rechargeUpdated.setPlanName(recharge.getPlanName());
-		return rechargeDao.save(rechargeUpdated);
-	}
+        LocalDate date = LocalDate.now();
+        recharge.setAccount(account);
+        recharge.setAmount(pack.getCost());
+        recharge.setDaysValidity(pack.getDaysValidity());
+        recharge.setPlanDescription(pack.getDescription());
+        recharge.setPlanName(pack.getPlanName());
+        recharge.setPurchasedDate(date);
+        recharge.setActive(true);
+        return rechargeDao.save(recharge);
+    }
 
-	@Override
-	public List<Recharge> findRechargesForUserInDescendingOrderByPurchasedDate(Account account) {
-		List<Recharge> recharge = rechargeDao.findAll();
-		List<Recharge> rechargeList = new ArrayList<Recharge>();
-		for(Recharge r : recharge) {
-			if(r.getAccount().getAccountId() == account.getAccountId()) {
-				rechargeList.add(r);
-			}
-		}
-		Collections.sort(rechargeList,
-			new Comparator<Recharge>(){
-				public int compare(Recharge r1, Recharge r2) {
-					return r2.getPurchasedDate().compareTo(r1.getPurchasedDate());
-				}
-			});
-		
-		return rechargeList;
-	}
+    @Override
+    public Recharge update(Recharge recharge) {
+        Recharge rechargeUpdated = new Recharge();
+        rechargeDao.deleteById(recharge.getId());
+        rechargeUpdated.setAccount(recharge.getAccount());
+        rechargeUpdated.setAmount(recharge.getAmount());
+        rechargeUpdated.setDaysValidity(recharge.getDaysValidity());
+        rechargeUpdated.setPlanDescription(recharge.getPlanDescription());
+        rechargeUpdated.setPlanName(recharge.getPlanName());
+        return rechargeDao.save(rechargeUpdated);
+    }
 
-	@Override
-	public int rechargesForUserCount(Account account) {
-		List<Recharge> recharges = account.getRecharges();
-		return recharges.size();
-	}
+    @Override
+    public List<Recharge> findRechargesForUserInDescendingOrderByPurchasedDate(Account account) {
+        return rechargeDao.findRechargesForUserInDescendingOrderByPurchasedDate(account);
+    }
 
-	@Override
-	public List<Recharge> findAllRechargesInPeriod(LocalDate startDate, LocalDate endDate) {
-		List<Recharge> recharge = rechargeDao.findAll();
-		List<Recharge> rechargeList = new ArrayList<Recharge>();
-		for(Recharge r : recharge) {
-			LocalDate date = r.getPurchasedDate();
-			if(date.equals(startDate) || date.equals(endDate) || (date.isAfter(startDate) && date.isBefore(endDate))) {
-				rechargeList.add(r);
-			}
-		}
-		return rechargeList;
-	}
+    @Override
+    public int rechargesForUserCount(Account account) {
+        return rechargeDao.rechargesForUserCount(account);
+    }
 
-	@Override
-	public int countRechargesInPeriod(LocalDate startDate, LocalDate endDate) {
-		int count=0;
-		List<Recharge> recharge = rechargeDao.findAll();
-		for(Recharge r : recharge) {
-			LocalDate date = r.getPurchasedDate();
-			if(date.equals(startDate) || date.equals(endDate) || (date.isAfter(startDate) && date.isBefore(endDate)))
-				count++;
-		}
-		return count;
-	}
+    @Override
+    public List<Recharge> findAllRechargesInPeriod(LocalDate startDate, LocalDate endDate) {
+        return rechargeDao.findAllRechargesInPeriod(startDate, endDate);
+    }
 
-	@Override
-	public double totalRevenueInPeriod(LocalDate startDate, LocalDate endDate) {
-		double revenue = 0;
-		List<Recharge> recharge = rechargeDao.findAll();
-		for(Recharge r : recharge) {
-			LocalDate date = r.getPurchasedDate();
-			if(date.equals(startDate) || date.equals(endDate) || (date.isAfter(startDate) && date.isBefore(endDate)))
-				revenue += r.getAmount();
-		}
-		return revenue;
-	}
+    @Override
+    public int countRechargesInPeriod(LocalDate startDate, LocalDate endDate) {
+        return rechargeDao.countRechargesInPeriod(startDate, endDate);
+    }
 
-	@Override
-	public int rechargesCount(Pack pack) {
-		int count = 0;
-		List<Recharge> recharge = rechargeDao.findAll();
-		for(Recharge r : recharge) {
-			if(r.getPack().getId() == pack.getId())
-				count++;
-		}
-		return count;
-	}
+    @Override
+    public double totalRevenueInPeriod(LocalDate startDate, LocalDate endDate) {
+        return rechargeDao.totalRevenueInPeriod(startDate, endDate);
+    }
 
-	@Override
-	public String expireIfValidityFinished(Account account, Recharge recharge) {
-		LocalDate date = LocalDate.now();
-		LocalDate rechargeDate = recharge.getPurchasedDate();
-		LocalDate validDate = rechargeDate.plusDays(recharge.getDaysValidity());
-		if(validDate.isBefore(date)) {
-			recharge.setActive(false);
-			account.setCurrentPack(null);
-			return "Validity Expired";
-		}else {
-			return "Validity not Expired";
-		}
-	}
+    @Override
+    public int rechargesCount(Pack pack) {
+        return rechargeDao.rechargesCount(pack);
+    }
+
+    @Override
+    public String expireIfValidityFinished(Account account, Recharge recharge) {
+        LocalDate date = LocalDate.now();
+        LocalDate rechargeDate = recharge.getPurchasedDate();
+        LocalDate validDate = rechargeDate.plusDays(recharge.getDaysValidity());
+        if (validDate.isBefore(date)) {
+            recharge.setActive(false);
+            account.setCurrentPack(null);
+            return "Validity Expired";
+        } else {
+            return "Validity not Expired";
+        }
+    }
 }
