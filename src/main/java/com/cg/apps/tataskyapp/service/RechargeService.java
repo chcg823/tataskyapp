@@ -8,7 +8,7 @@ import com.cg.apps.tataskyapp.entities.Pack;
 import com.cg.apps.tataskyapp.entities.Recharge;
 
 public interface RechargeService {
-	
+
 	Recharge createRecharge(Pack pack, Account account);
 	Recharge update(Recharge recharge);
 	List<Recharge> findRechargesForUserInDescendingOrderByPurchasedDate(Account account);
@@ -17,5 +17,5 @@ public interface RechargeService {
 	int countRechargesInPeriod(LocalDate startDate, LocalDate endDate);
 	double totalRevenueInPeriod(LocalDate startDate, LocalDate endDate);
 	int rechargesCount(Pack pack);
-	Recharge expireIfValidityFinished(Account account ,Recharge recharge);
+	String expireIfValidityFinished(Account account ,Recharge recharge);
 }

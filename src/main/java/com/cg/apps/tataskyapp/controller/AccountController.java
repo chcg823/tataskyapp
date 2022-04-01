@@ -1,63 +1,117 @@
 package com.cg.apps.tataskyapp.controller;
 
-import java.util.Optional;
-
+import com.cg.apps.tataskyapp.dao.AccountDao;
+import com.cg.apps.tataskyapp.dao.UsersDao;
+import com.cg.apps.tataskyapp.dto.*;
+import com.cg.apps.tataskyapp.entities.*;
+import com.cg.apps.tataskyapp.service.AccountService;
+import com.cg.apps.tataskyapp.service.PackService;
+import com.cg.apps.tataskyapp.service.UsersService;
+import com.cg.apps.tataskyapp.utils.AccountNotFoundException;
+import com.cg.apps.tataskyapp.utils.PackNotFoundException;
+import com.cg.apps.tataskyapp.utils.UserNotFoundException;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.cg.apps.tataskyapp.entities.Account;
-import com.cg.apps.tataskyapp.service.AccountService;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/account")
 public class AccountController {
 
-	@Autowired
-	AccountService accountService;
+    @Autowired
+    AccountService accountService;
 
-	@PostMapping("/add")
-	public ResponseEntity<String> addAccount(@RequestBody Account account) {
-		Account newAcc = accountService.add(account);
-		HttpHeaders header = new HttpHeaders();
-		header.add("desc", "add Account");
-		String message = "Account added";
-		return new ResponseEntity<String>(message, header, HttpStatus.OK);
-	}
+    @Autowired
+    AccountDao accountDao;
 
-	@DeleteMapping("/delete/{accountId}")
-	public ResponseEntity<String> deleteAccountById(@PathVariable Long accountId) {
-		accountService.deleteByAccountId(accountId);
-		HttpHeaders header = new HttpHeaders();
-		header.add("desc","delete account by id");
-		String message = "Account deleted";
-		return new ResponseEntity<String>(message, header, HttpStatus.OK);
-	}
+    @Autowired
+    UsersService usersService;
 
-	@PutMapping("/update")
-	public ResponseEntity<String> updateAccount(@RequestBody Account account) {
-		accountService.update(account);
-		HttpHeaders header = new HttpHeaders();
-		header.add("desc", "update account");
-		String message = "Account updated";
-		return new ResponseEntity<String>(message, header, HttpStatus.OK);
-	}
+    @Autowired
+    PackService packService;
 
-	@GetMapping("/greet")
-	public ResponseEntity<String> sayHello() {
-		String message = "Welcome";
-		HttpHeaders header = new HttpHeaders();
-		header.add("desc", "Tata Sky App");
-		return new ResponseEntity<String>(message, header, HttpStatus.OK);
-	}
+    @PostMapping("/add")
+    public ResponseEntity<Account> addAccount(@RequestBody AccountDto accountDto) {
+        Users user = usersService.findUsersById(accountDto.getUserId());
+        if(user==null)
+            throw new UserNotFoundException();
+        Account newAccount = new Account();
+        newAccount.setAccountId(accountDto.getId());
+        newAccount.setRegisteredDate(accountDto.getRegisteredDate());
+        user.setAccount(newAccount);
+        newAccount.setUsers(user);
+        newAccount.setCurrentPack(packService.findPackById(accountDto.getPackId()));
+        accountService.add(newAccount);
+        return new ResponseEntity<>(newAccount, HttpStatus.OK);
+    }
 
-	@GetMapping("/count/accounts")
-	public ResponseEntity<String> countAccount(){
-		int count = accountService.countAccounts();
-		String message = "Total no. of accounts: "+count;
-		return new ResponseEntity<String>(message, HttpStatus.OK);
-	}
+    @GetMapping("/find/{id}")
+    public ResponseEntity<Account> findAccountById(@PathVariable Long id) {
+        Account acc = accountService.findByAccountId(id);
+        return ResponseEntity.status(HttpStatus.OK).body(acc);
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<Account> updateAccount(@RequestBody AccountDto accountDto) {
+        Account acc = accountService.findByAccountId(accountDto.getId());
+        if(acc==null)
+            addAccount(accountDto);
+        Users user = usersService.findUsersById(accountDto.getUserId());
+        acc.setAccountId(accountDto.getId());
+        acc.setRegisteredDate(accountDto.getRegisteredDate());
+        acc.setUsers(user);
+        Pack pack =  packService.findPackById(accountDto.getPackId());
+        acc.setCurrentPack(pack);
+        accountService.update(acc);
+        return new ResponseEntity<>(acc, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{accountId}")
+    public ResponseEntity<String> deleteAccountById(@PathVariable Long accountId) {
+        accountService.deleteByAccountId(accountId);
+        String message = "Account deleted";
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
+    @PostMapping("/count/accounts/{startDate}/{endDate}")
+    public ResponseEntity<String> countCreatedAccountsInPeriod(@PathVariable String startDate, @PathVariable String endDate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MM-yyyy");
+        LocalDate startLDate = LocalDate.parse(startDate, formatter);
+        LocalDate endLDate = LocalDate.parse(endDate, formatter);
+        int count = accountService.countCreatedAccountsInPeriod(startLDate, endLDate);
+        String message = "Total no. of accounts created between period " + startDate + " and " + endDate + " is " + count;
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
+    @GetMapping("/count/accounts")
+    public ResponseEntity<String> countAccount() {
+        int count = accountService.countAccounts();
+        String message = "Total no. of accounts: " + count;
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
+    @PostMapping("/remove-pack/{accountId}/{packId}")
+    public ResponseEntity<String> removePackForAccount(@PathVariable Long accountId,@PathVariable Long packId) {
+        Account account = accountService.findByAccountId(accountId);
+        Pack pack = packService.findPackById(packId);
+        accountService.removePackFromAccount(account, pack);
+        return new ResponseEntity<>("pack removed", HttpStatus.OK);
+    }
+
+    @GetMapping("/greet")
+    public ResponseEntity<String> sayHello() {
+        String message = "Welcome";
+        HttpHeaders header = new HttpHeaders();
+        header.add("desc", "Tata Sky App");
+        return new ResponseEntity<>(message, header, HttpStatus.OK);
+    }
 
 }

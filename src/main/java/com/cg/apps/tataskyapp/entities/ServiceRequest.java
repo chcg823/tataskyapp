@@ -1,6 +1,6 @@
 package com.cg.apps.tataskyapp.entities;
-
 import java.time.LocalDate;
+import java.util.Optional;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,17 +12,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 @Table(name = "servicerequest")
 public class ServiceRequest {
-
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="service_id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	@Column(name = "requestDate")
 	private LocalDate requestDate;
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "account_service")
+	@JoinColumn(name = "account_id")
 	private Account account;
 	@Column(name = "message", length = 30)
 	private String message;
@@ -30,9 +31,16 @@ public class ServiceRequest {
 	private Boolean statusOpened;
 
 	public ServiceRequest() {
-
 	}
-
+	public ServiceRequest(LocalDate requestDate, Account account, String message, Boolean statusOpened) {
+		this.requestDate = requestDate;
+		this.account = account;
+		this.message = message;
+		this.statusOpened = statusOpened;
+	}
+	public ServiceRequest(String message) {
+		this.message = message;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -52,34 +60,30 @@ public class ServiceRequest {
 	public Account getAccount() {
 		return account;
 	}
-
 	public void setAccount(Account account) {
 		this.account = account;
 	}
-
 	public String getMessage() {
 		return message;
 	}
-
 	public void setMessage(String message) {
 		this.message = message;
 	}
-
 	public Boolean getStatusOpened() {
 		return statusOpened;
 	}
-
 	public void setStatusOpened(Boolean statusOpened) {
 		this.statusOpened = statusOpened;
 	}
 
-	public ServiceRequest(Long id, LocalDate requestDate, Account account, String message, Boolean statusOpened) {
-		super();
-		this.id = id;
-		this.requestDate = requestDate;
-		this.account = account;
-		this.message = message;
-		this.statusOpened = statusOpened;
+	@Override
+	public String toString() {
+		return "ServiceRequest{" +
+				"id=" + id +
+				", requestDate=" + requestDate +
+				", account=" + account.getAccountId() +
+				", message='" + message + '\'' +
+				", statusOpened=" + statusOpened +
+				'}';
 	}
-
 }

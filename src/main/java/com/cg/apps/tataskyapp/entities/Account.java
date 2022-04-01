@@ -10,7 +10,7 @@ import java.util.List;
 public class Account {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long accountId;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -38,6 +38,7 @@ public class Account {
         this.accountId = accountId;
         this.users = users;
         this.recharges = recharges;
+        //this.pack = pack;
         this.currentPack = pack;
         this.requests = requests;
         this.registeredDate = registeredDate;
@@ -51,6 +52,7 @@ public class Account {
         this.requests = acc.requests;
         this.registeredDate = acc.registeredDate;
     }
+
 
     public Long getAccountId() {
         return accountId;
@@ -74,10 +76,6 @@ public class Account {
 
     public void setRecharges(List<Recharge> recharges) {
         this.recharges = recharges;
-    }
-
-    public void addRecharge(Recharge recharge) {
-        recharges.add(recharge);
     }
 
     public List<ServiceRequest> getRequests() {
@@ -104,10 +102,15 @@ public class Account {
         this.currentPack = currentPack;
     }
 
-    @Override
-    public String toString() {
-        return "Account [accountId=" + accountId + ", users=" + users + ", recharges=" + recharges + ", currentPack="
-                + currentPack + ", requests=" + requests + ", registeredDate=" + registeredDate + "]";
+    public void copy(Account account) {
+
+        this.accountId = account.getAccountId();
+        this.users = account.getUsers();
+        this.recharges = account.getRecharges();
+        this.registeredDate = account.getRegisteredDate();
+        this.requests = account.getRequests();
+        this.currentPack = account.getCurrentPack();
+
     }
 
 
