@@ -6,17 +6,15 @@ public class AccountDto {
 
     private Long id;
     private Long userId;
-    private Long packId;
     private LocalDate registeredDate;
 
     public AccountDto() {
 
     }
 
-    public AccountDto(Long id, Long userId, Long packId, LocalDate registeredDate) {
+    public AccountDto(Long id, Long userId,  LocalDate registeredDate) {
         this.id = id;
         this.userId = userId;
-        this.packId = packId;
         this.registeredDate = LocalDate.now();
     }
 
@@ -34,14 +32,6 @@ public class AccountDto {
 
     public void setUserId(Long userId) {
         this.userId = userId;
-    }
-
-    public Long getPackId() {
-        return packId;
-    }
-
-    public void setPackId(Long packId) {
-        this.packId = packId;
     }
 
     public LocalDate getRegisteredDate() {

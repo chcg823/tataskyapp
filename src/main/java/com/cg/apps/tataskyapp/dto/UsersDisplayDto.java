@@ -2,15 +2,25 @@ package com.cg.apps.tataskyapp.dto;
 
 import com.cg.apps.tataskyapp.entities.Users;
 
-public class UsersDto {
+public class UsersDisplayDto {
 
 
     private Long id;
     private String username;
     private String firstName;
     private String lastName;
-    private String password;
     private String role;
+
+    public UsersDisplayDto() {
+
+    }
+
+    public UsersDisplayDto(Users user) {
+        this.id = user.getId();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.role = user.getRole();
+    }
 
     public Long getId() {
         return id;
@@ -44,14 +54,6 @@ public class UsersDto {
         this.lastName = lastName;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getRole() {
         return role;
     }
@@ -59,8 +61,6 @@ public class UsersDto {
     public void setRole(String role) {
         this.role = role;
     }
-
-
 
 
 }

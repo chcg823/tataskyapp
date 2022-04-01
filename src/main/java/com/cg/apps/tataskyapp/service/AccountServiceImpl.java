@@ -80,7 +80,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void removePackFromAccount(Account account, Pack pack) {
-        if(packDao.existsById(pack.getId()))
+        if(!packDao.existsById(pack.getId()) || !account.getCurrentPack().equals(pack))
             throw new PackNotFoundException();
         account.setCurrentPack(null);
         accDao.save(account);

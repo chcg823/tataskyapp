@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import com.cg.apps.tataskyapp.dto.RechargeDtoForAcc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +41,7 @@ public class RechargeController {
     RechargeDao rechargeDao;
 
     @PostMapping("/create/{packId}/{accountId}")
-    public ResponseEntity<Recharge> createRecharge(@PathVariable long packId, @PathVariable long accountId){
+    public ResponseEntity<RechargeDtoForAcc> createRecharge(@PathVariable long packId, @PathVariable long accountId){
         Pack pack = packDao.findById(packId).orElse(null);
         Account account = accountDao.findById(accountId).orElse(null);
         if(pack == null) {
@@ -50,7 +51,8 @@ public class RechargeController {
             throw new AccountNotFoundException();
         }
         Recharge recharge = rechargeService.createRecharge(pack, account);
-        return new ResponseEntity<Recharge>(recharge, HttpStatus.OK);
+        RechargeDtoForAcc rechargeDtoForAcc = new RechargeDtoForAcc(recharge);
+        return new ResponseEntity<RechargeDtoForAcc>(rechargeDtoForAcc, HttpStatus.OK);
     }
 
     @PutMapping("/update/{rechargeDto}")

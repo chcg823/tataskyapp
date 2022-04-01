@@ -39,7 +39,7 @@ public class AccountController {
     PackService packService;
 
     @PostMapping("/add")
-    public ResponseEntity<Account> addAccount(@RequestBody AccountDto accountDto) {
+    public ResponseEntity<AccountDisplayDto> addAccount(@RequestBody AccountDto accountDto) {
         Users user = usersService.findUsersById(accountDto.getUserId());
         if(user==null)
             throw new UserNotFoundException();
@@ -48,19 +48,25 @@ public class AccountController {
         newAccount.setRegisteredDate(accountDto.getRegisteredDate());
         user.setAccount(newAccount);
         newAccount.setUsers(user);
-        newAccount.setCurrentPack(packService.findPackById(accountDto.getPackId()));
         accountService.add(newAccount);
-        return new ResponseEntity<>(newAccount, HttpStatus.OK);
+        AccountDisplayDto accountDisplayDto = new AccountDisplayDto(newAccount);
+
+        return new ResponseEntity<>(accountDisplayDto, HttpStatus.OK);
     }
 
     @GetMapping("/find/{id}")
-    public ResponseEntity<Account> findAccountById(@PathVariable Long id) {
-        Account acc = accountService.findByAccountId(id);
-        return ResponseEntity.status(HttpStatus.OK).body(acc);
+    public ResponseEntity<AccountDisplayDto> findAccountById(@PathVariable Long id) {
+        Account account = accountService.findByAccountId(id);
+        AccountDisplayDto accountDisplayDto = new AccountDisplayDto(account);
+        List<RechargeDtoForAcc> rechargeDtoForAccList = new ArrayList<>();
+        for(Recharge recharge: account.getRecharges())
+            rechargeDtoForAccList.add(new RechargeDtoForAcc(recharge));
+        accountDisplayDto.setRechargeDtoForAccList(rechargeDtoForAccList);
+        return new ResponseEntity<>(accountDisplayDto, HttpStatus.OK);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Account> updateAccount(@RequestBody AccountDto accountDto) {
+    public ResponseEntity<AccountDisplayDto> updateAccount(@RequestBody AccountDto accountDto) {
         Account acc = accountService.findByAccountId(accountDto.getId());
         if(acc==null)
             addAccount(accountDto);
@@ -68,10 +74,13 @@ public class AccountController {
         acc.setAccountId(accountDto.getId());
         acc.setRegisteredDate(accountDto.getRegisteredDate());
         acc.setUsers(user);
-        Pack pack =  packService.findPackById(accountDto.getPackId());
-        acc.setCurrentPack(pack);
+        AccountDisplayDto accountDisplayDto = new AccountDisplayDto(acc);
+        List<RechargeDtoForAcc> rechargeDtoForAccList = new ArrayList<>();
+        for(Recharge recharge: acc.getRecharges())
+            rechargeDtoForAccList.add(new RechargeDtoForAcc(recharge));
+        accountDisplayDto.setRechargeDtoForAccList(rechargeDtoForAccList);
         accountService.update(acc);
-        return new ResponseEntity<>(acc, HttpStatus.OK);
+        return new ResponseEntity<>(accountDisplayDto, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{accountId}")

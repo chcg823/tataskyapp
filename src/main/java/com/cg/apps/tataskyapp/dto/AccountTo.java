@@ -11,7 +11,7 @@ public class AccountTo {
     private Long id;
     private UserTo userTo;
     private LocalDate registeredDate;
-    private List<RechargeToForAcc> recharges;
+    private List<RechargeDtoForAcc> recharges;
     private List<ServiceRequestTo> requests;
     private Pack currentPack;
 
@@ -45,11 +45,11 @@ public class AccountTo {
         this.registeredDate = registeredDate;
     }
 
-    public List<RechargeToForAcc> getRecharges() {
+    public List<RechargeDtoForAcc> getRecharges() {
         return recharges;
     }
 
-    public void setRecharges(List<RechargeToForAcc> recharges) {
+    public void setRecharges(List<RechargeDtoForAcc> recharges) {
         this.recharges = recharges;
     }
 
