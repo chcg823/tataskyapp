@@ -53,9 +53,9 @@ public class AccountController {
     }
 
     @GetMapping("/find/{id}")
-    public ResponseEntity<String> findAccountById(@PathVariable Long id) {
+    public ResponseEntity<Account> findAccountById(@PathVariable Long id) {
         Account acc = accountService.findByAccountId(id);
-        return new ResponseEntity<>(acc.toString(), HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(acc);
     }
 
     @PutMapping("/update")

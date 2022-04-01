@@ -31,7 +31,6 @@ public class RechargeServiceImpl implements RechargeService {
         recharge.setPurchasedDate(date);
         recharge.setActive(true);
         recharge.setPack(pack);
-        accountService.removePackFromAccount(account, account.getCurrentPack());
         account.setCurrentPack(pack);
         return rechargeDao.save(recharge);
     }

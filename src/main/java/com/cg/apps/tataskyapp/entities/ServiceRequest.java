@@ -81,7 +81,7 @@ public class ServiceRequest {
 		return "ServiceRequest{" +
 				"id=" + id +
 				", requestDate=" + requestDate +
-				", account=" + account +
+				", account=" + account.getAccountId() +
 				", message='" + message + '\'' +
 				", statusOpened=" + statusOpened +
 				'}';
