@@ -1,13 +1,16 @@
 package com.cg.apps.tataskyapp.controller;
 
+import com.cg.apps.tataskyapp.dao.AccountDao;
 import com.cg.apps.tataskyapp.dao.UsersDao;
 import com.cg.apps.tataskyapp.dto.*;
 import com.cg.apps.tataskyapp.entities.*;
 import com.cg.apps.tataskyapp.service.AccountService;
+import com.cg.apps.tataskyapp.service.PackService;
 import com.cg.apps.tataskyapp.service.UsersService;
 import com.cg.apps.tataskyapp.utils.AccountNotFoundException;
 import com.cg.apps.tataskyapp.utils.PackNotFoundException;
 import com.cg.apps.tataskyapp.utils.UserNotFoundException;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -27,7 +30,13 @@ public class AccountController {
     AccountService accountService;
 
     @Autowired
+    AccountDao accountDao;
+
+    @Autowired
     UsersService usersService;
+
+    @Autowired
+    PackService packService;
 
     @PostMapping("/add")
     public ResponseEntity<Account> addAccount(@RequestBody AccountDto accountDto) {
@@ -46,29 +55,22 @@ public class AccountController {
     @GetMapping("/find/{id}")
     public ResponseEntity<String> findAccountById(@PathVariable Long id) {
         Account acc = accountService.findByAccountId(id);
-        if(acc==null)
-            throw new AccountNotFoundException();
         return new ResponseEntity<>(acc.toString(), HttpStatus.OK);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<String> updateAccount(@RequestBody Account account) {
-        Account acc = accountService.update(account);
-        AccountTo accountTo = new AccountTo(acc);
-        Users user = account.getUsers();
-        UserTo userTo = new UserTo(user);
-        accountTo.setUserTo(userTo);
-        List<Recharge> recharges = account.getRecharges();
-        List<RechargeToForAcc> rechargeToForAccs = new ArrayList<>();
-        for(Recharge recharge: recharges)
-            rechargeToForAccs.add(new RechargeToForAcc(recharge));
-        List<ServiceRequest> serviceRequests = account.getRequests();
-        List<ServiceRequestTo> serviceRequestTos = new ArrayList<>();
-        for(ServiceRequest serviceRequest: serviceRequests)
-            serviceRequestTos.add(new ServiceRequestTo(serviceRequest));
-        accountTo.setRequests(serviceRequestTos);
-        accountTo.setRecharges(rechargeToForAccs);
-        return new ResponseEntity<>("Account updated", HttpStatus.OK);
+    public ResponseEntity<String> updateAccount(@RequestBody AccountDto accountDto) {
+        Account acc = accountService.findByAccountId(accountDto.getId());
+        if(acc==null)
+            addAccount(accountDto);
+        Users user = usersService.findUsersById(accountDto.getUserId());
+        acc.setAccountId(accountDto.getId());
+        acc.setRegisteredDate(accountDto.getRegisteredDate());
+        acc.setUsers(user);
+        Pack pack =  packService.findPackById(accountDto.getPackId());
+        acc.setCurrentPack(pack);
+        accountService.update(acc);
+        return new ResponseEntity<>(acc.toString(), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{accountId}")

@@ -30,7 +30,7 @@ public class AccountServiceImpl implements AccountService {
     public Account findByAccountId(Long accountId) {
         if(!accDao.existsById(accountId))
             throw new AccountNotFoundException();
-        Account acc = accDao.getOne(accountId);
+        Account acc = accDao.getAccById(accountId);
         return acc;
     }
 

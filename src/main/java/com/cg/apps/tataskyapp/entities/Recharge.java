@@ -138,4 +138,20 @@ public class Recharge {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
+
+	@Override
+	public String toString() {
+		return "Recharge{" +
+				"id=" + id +
+				", account=" + account +
+				", amount=" + amount +
+				", daysValidity=" + daysValidity +
+				", planDescription='" + planDescription + '\'' +
+				", planName='" + planName + '\'' +
+				", purchasedDate=" + purchasedDate +
+				", pack=" + pack +
+				", channels=" + channels +
+				", active=" + active +
+				'}';
+	}
 }

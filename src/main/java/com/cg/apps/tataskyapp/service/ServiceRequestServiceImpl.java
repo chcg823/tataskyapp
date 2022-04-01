@@ -29,6 +29,8 @@ public class ServiceRequestServiceImpl implements ServiceRequestService {
         req.setRequestDate(dto.getRequestDate());
         req.setStatusOpened(dto.getStatusOpened());
         serDao.save(req);
+        List<ServiceRequest> sr = acc.getRequests();
+        sr.add(req);
         return "service request is created";
     }
 

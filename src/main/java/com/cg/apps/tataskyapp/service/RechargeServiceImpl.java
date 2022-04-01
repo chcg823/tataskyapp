@@ -16,10 +16,12 @@ public class RechargeServiceImpl implements RechargeService {
     @Autowired
     RechargeDao rechargeDao;
 
+    @Autowired
+    AccountService accountService;
+
     @Override
     public Recharge createRecharge(Pack pack, Account account) {
         Recharge recharge = new Recharge();
-
         LocalDate date = LocalDate.now();
         recharge.setAccount(account);
         recharge.setAmount(pack.getCost());
@@ -28,6 +30,9 @@ public class RechargeServiceImpl implements RechargeService {
         recharge.setPlanName(pack.getPlanName());
         recharge.setPurchasedDate(date);
         recharge.setActive(true);
+        recharge.setPack(pack);
+        accountService.removePackFromAccount(account, account.getCurrentPack());
+        account.setCurrentPack(pack);
         return rechargeDao.save(recharge);
     }
 

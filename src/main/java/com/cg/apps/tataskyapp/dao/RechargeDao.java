@@ -14,19 +14,19 @@ import com.cg.apps.tataskyapp.entities.Recharge;
 @Repository
 public interface RechargeDao extends JpaRepository<Recharge, Long>{
 
-    @Query(value = "from Recharge r where r.account=?1 ORDER BY r.purchasedDate DESC")
+    @Query(value = "select r from Recharge r where r.account=?1 ORDER BY r.purchasedDate DESC")
     public List<Recharge> findRechargesForUserInDescendingOrderByPurchasedDate(Account account);
 
     @Query(value = "select count(*) from Recharge r where r.account=?1")
     public int rechargesForUserCount(Account account);
 
-    @Query(value = "from Recharge  r where r.purchasedDate between ?1 and ?2")
+    @Query(value = "select r from Recharge  r where r.purchasedDate between :startDate and :endDate")
     public List<Recharge> findAllRechargesInPeriod(LocalDate startDate, LocalDate endDate);
 
-    @Query(value = "select count(r.id) from Recharge r where r.purchasedDate between ?1 and ?2")
+    @Query(value = "select count(r.id) from Recharge r where r.purchasedDate between :startDate and :endDate")
     public int countRechargesInPeriod(LocalDate startDate, LocalDate endDate);
 
-    @Query(value = "select sum(r.amount) from Recharge r where r.purchasedDate between ?1 and ?2")
+    @Query(value = "select sum(r.amount) from Recharge r where r.purchasedDate between :startDate and :endDate")
     public double totalRevenueInPeriod(LocalDate startDate, LocalDate endDate);
 
     @Query(value = "select count(r.id) from Recharge r where r.pack = ?1")

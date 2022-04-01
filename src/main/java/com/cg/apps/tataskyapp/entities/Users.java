@@ -112,7 +112,7 @@ public class Users {
 				", lastName='" + lastName + '\'' +
 				", password='" + password + '\'' +
 				", role='" + role + '\'' +
-				", account=" + account +
+				", account=" + account.getAccountId() +
 				'}';
 	}
 }

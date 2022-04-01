@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class ServiceRequest {
 	@Id
 	@Column(name="service_id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	@Column(name = "requestDate")
 	private LocalDate requestDate;
@@ -74,5 +74,16 @@ public class ServiceRequest {
 	}
 	public void setStatusOpened(Boolean statusOpened) {
 		this.statusOpened = statusOpened;
+	}
+
+	@Override
+	public String toString() {
+		return "ServiceRequest{" +
+				"id=" + id +
+				", requestDate=" + requestDate +
+				", account=" + account +
+				", message='" + message + '\'' +
+				", statusOpened=" + statusOpened +
+				'}';
 	}
 }

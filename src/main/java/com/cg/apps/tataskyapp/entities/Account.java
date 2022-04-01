@@ -10,7 +10,7 @@ import java.util.List;
 public class Account {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long accountId;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -115,8 +115,7 @@ public class Account {
 
     @Override
     public String toString() {
-        return "Account [accountId=" + accountId + ", users=" + users.getUsername() + ", recharges=" + recharges + ", currentPack="
-                + currentPack + ", requests=" + requests + ", registeredDate=" + registeredDate + "]";
+        return "Account [accountId=" + accountId + ",  registeredDate=" + registeredDate + "]";
     }
 
 
