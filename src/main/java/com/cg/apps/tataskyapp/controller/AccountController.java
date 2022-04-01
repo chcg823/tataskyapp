@@ -5,6 +5,7 @@ import com.cg.apps.tataskyapp.dto.*;
 import com.cg.apps.tataskyapp.entities.*;
 import com.cg.apps.tataskyapp.service.AccountService;
 import com.cg.apps.tataskyapp.service.UsersService;
+import com.cg.apps.tataskyapp.utils.AccountNotFoundException;
 import com.cg.apps.tataskyapp.utils.PackNotFoundException;
 import com.cg.apps.tataskyapp.utils.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,8 @@ public class AccountController {
     @GetMapping("/find/{id}")
     public ResponseEntity<String> findAccountById(@PathVariable Long id) {
         Account acc = accountService.findByAccountId(id);
+        if(acc==null)
+            throw new AccountNotFoundException();
         return new ResponseEntity<>(acc.toString(), HttpStatus.OK);
     }
 

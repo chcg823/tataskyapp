@@ -28,17 +28,17 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account findByAccountId(Long accountId) {
-        Optional<Account> opt = accDao.findById(accountId);
-        Account acc = opt.get();
+        if(!accDao.existsById(accountId))
+            throw new AccountNotFoundException();
+        Account acc = accDao.getOne(accountId);
         return acc;
     }
 
     @Override
     public Account update(Account account) {
-        Optional<Account> opt = accDao.findById(account.getAccountId());
-        Account acc = opt.get();
-        acc.copy(account);
-        return accDao.save(acc);
+        Account acc = new Account(account);
+        accDao.save(acc);
+        return acc;
     }
 
     @Override
