@@ -1,9 +1,7 @@
 package com.cg.apps.tataskyapp.dto;
 
-import com.cg.apps.tataskyapp.entities.Account;
 import com.cg.apps.tataskyapp.entities.ServiceRequest;
 
-import javax.persistence.*;
 import java.time.LocalDate;
 
 public class ServiceRequestDisplayDto {

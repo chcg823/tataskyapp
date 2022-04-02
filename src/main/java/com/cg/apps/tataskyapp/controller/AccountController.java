@@ -1,16 +1,17 @@
 package com.cg.apps.tataskyapp.controller;
 
 import com.cg.apps.tataskyapp.dao.AccountDao;
-import com.cg.apps.tataskyapp.dao.UsersDao;
-import com.cg.apps.tataskyapp.dto.*;
-import com.cg.apps.tataskyapp.entities.*;
+import com.cg.apps.tataskyapp.dto.AccountDisplayDto;
+import com.cg.apps.tataskyapp.dto.AccountDto;
+import com.cg.apps.tataskyapp.dto.RechargeDtoForAcc;
+import com.cg.apps.tataskyapp.entities.Account;
+import com.cg.apps.tataskyapp.entities.Pack;
+import com.cg.apps.tataskyapp.entities.Recharge;
+import com.cg.apps.tataskyapp.entities.Users;
 import com.cg.apps.tataskyapp.service.AccountService;
 import com.cg.apps.tataskyapp.service.PackService;
 import com.cg.apps.tataskyapp.service.UsersService;
-import com.cg.apps.tataskyapp.utils.AccountNotFoundException;
-import com.cg.apps.tataskyapp.utils.PackNotFoundException;
 import com.cg.apps.tataskyapp.utils.UserNotFoundException;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -41,7 +42,7 @@ public class AccountController {
     @PostMapping("/add")
     public ResponseEntity<AccountDisplayDto> addAccount(@RequestBody AccountDto accountDto) {
         Users user = usersService.findUsersById(accountDto.getUserId());
-        if(user==null)
+        if (user == null)
             throw new UserNotFoundException();
         Account newAccount = new Account();
         newAccount.setAccountId(accountDto.getId());
@@ -59,7 +60,7 @@ public class AccountController {
         Account account = accountService.findByAccountId(id);
         AccountDisplayDto accountDisplayDto = new AccountDisplayDto(account);
         List<RechargeDtoForAcc> rechargeDtoForAccList = new ArrayList<>();
-        for(Recharge recharge: account.getRecharges())
+        for (Recharge recharge : account.getRecharges())
             rechargeDtoForAccList.add(new RechargeDtoForAcc(recharge));
         accountDisplayDto.setRechargeDtoForAccList(rechargeDtoForAccList);
         return new ResponseEntity<>(accountDisplayDto, HttpStatus.OK);
@@ -68,7 +69,7 @@ public class AccountController {
     @PutMapping("/update")
     public ResponseEntity<AccountDisplayDto> updateAccount(@RequestBody AccountDto accountDto) {
         Account acc = accountService.findByAccountId(accountDto.getId());
-        if(acc==null)
+        if (acc == null)
             addAccount(accountDto);
         Users user = usersService.findUsersById(accountDto.getUserId());
         acc.setAccountId(accountDto.getId());
@@ -76,7 +77,7 @@ public class AccountController {
         acc.setUsers(user);
         AccountDisplayDto accountDisplayDto = new AccountDisplayDto(acc);
         List<RechargeDtoForAcc> rechargeDtoForAccList = new ArrayList<>();
-        for(Recharge recharge: acc.getRecharges())
+        for (Recharge recharge : acc.getRecharges())
             rechargeDtoForAccList.add(new RechargeDtoForAcc(recharge));
         accountDisplayDto.setRechargeDtoForAccList(rechargeDtoForAccList);
         accountService.update(acc);
@@ -108,7 +109,7 @@ public class AccountController {
     }
 
     @PostMapping("/remove-pack/{accountId}/{packId}")
-    public ResponseEntity<String> removePackForAccount(@PathVariable Long accountId,@PathVariable Long packId) {
+    public ResponseEntity<String> removePackForAccount(@PathVariable Long accountId, @PathVariable Long packId) {
         Account account = accountService.findByAccountId(accountId);
         Pack pack = packService.findPackById(packId);
         accountService.removePackFromAccount(account, pack);

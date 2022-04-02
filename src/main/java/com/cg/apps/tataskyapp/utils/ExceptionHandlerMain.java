@@ -10,42 +10,42 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ExceptionHandlerMain {
 
     @ExceptionHandler(value = RechargeNotFoundException.class)
-    public ResponseEntity<Object> exception(RechargeNotFoundException e){
+    public ResponseEntity<Object> exception(RechargeNotFoundException e) {
         return new ResponseEntity<Object>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(value = AccountNotFoundException.class)
-    public ResponseEntity<Object> exception(AccountNotFoundException e){
+    public ResponseEntity<Object> exception(AccountNotFoundException e) {
         return new ResponseEntity<Object>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(value = AccountAlreadyExistException.class)
-    public ResponseEntity<Object> exception(AccountAlreadyExistException e){
+    public ResponseEntity<Object> exception(AccountAlreadyExistException e) {
         return new ResponseEntity<Object>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(value = PackNotFoundException.class)
-    public ResponseEntity<Object> exception(PackNotFoundException e){
+    public ResponseEntity<Object> exception(PackNotFoundException e) {
         return new ResponseEntity<Object>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(value = PackAlreadyExistException.class)
-    public ResponseEntity<Object> exception(PackAlreadyExistException e){
+    public ResponseEntity<Object> exception(PackAlreadyExistException e) {
         return new ResponseEntity<Object>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(value = RequestNotFoundException.class)
-    public ResponseEntity<Object> exception(RequestNotFoundException e){
+    public ResponseEntity<Object> exception(RequestNotFoundException e) {
         return new ResponseEntity<Object>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(value = UserNotFoundException.class)
-    public ResponseEntity<Object> exception(UserNotFoundException e){
+    public ResponseEntity<Object> exception(UserNotFoundException e) {
         return new ResponseEntity<Object>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(value = UserAlreadyExistException.class)
-    public ResponseEntity<Object> exception(UserAlreadyExistException e){
+    public ResponseEntity<Object> exception(UserAlreadyExistException e) {
         return new ResponseEntity<Object>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 }

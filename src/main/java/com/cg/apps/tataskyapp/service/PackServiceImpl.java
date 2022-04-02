@@ -2,7 +2,6 @@ package com.cg.apps.tataskyapp.service;
 
 import com.cg.apps.tataskyapp.dao.PackDao;
 import com.cg.apps.tataskyapp.entities.Pack;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -89,17 +88,17 @@ public class PackServiceImpl implements PackService {
         List<Pack> allPacks = packDao.findAll();
         List<Pack> packList = new ArrayList<>();
         int count = 0;
-		LinkedHashMap<Integer, Pack> data = new LinkedHashMap<>();
+        LinkedHashMap<Integer, Pack> data = new LinkedHashMap<>();
         for (Pack p : allPacks) {
             count = rechargeService.rechargesCount(p);
             data.put(count, p);
         }
-		List<Integer> rechFreq = new ArrayList<>(data.keySet());
-		int avgFreq = rechFreq.stream().mapToInt(Integer::intValue).sum()/rechFreq.size();
-		for(Integer i: rechFreq) {
-			if(i>avgFreq)
-				packList.add(data.get(i));
-		}
+        List<Integer> rechFreq = new ArrayList<>(data.keySet());
+        int avgFreq = rechFreq.stream().mapToInt(Integer::intValue).sum() / rechFreq.size();
+        for (Integer i : rechFreq) {
+            if (i > avgFreq)
+                packList.add(data.get(i));
+        }
         return packList;
 
     }

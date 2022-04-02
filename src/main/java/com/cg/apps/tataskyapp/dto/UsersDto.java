@@ -1,7 +1,5 @@
 package com.cg.apps.tataskyapp.dto;
 
-import com.cg.apps.tataskyapp.entities.Users;
-
 public class UsersDto {
 
 
@@ -59,8 +57,6 @@ public class UsersDto {
     public void setRole(String role) {
         this.role = role;
     }
-
-
 
 
 }

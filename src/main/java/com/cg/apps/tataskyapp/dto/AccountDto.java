@@ -12,7 +12,7 @@ public class AccountDto {
 
     }
 
-    public AccountDto(Long id, Long userId,  LocalDate registeredDate) {
+    public AccountDto(Long id, Long userId, LocalDate registeredDate) {
         this.id = id;
         this.userId = userId;
         this.registeredDate = LocalDate.now();

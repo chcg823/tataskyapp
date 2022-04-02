@@ -1,7 +1,5 @@
 package com.cg.apps.tataskyapp.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import java.time.LocalDate;
 
 public class ServiceRequestDto {
@@ -10,21 +8,25 @@ public class ServiceRequestDto {
     private Boolean statusOpened;
     private Long account_id;
     private String message;
+
     public ServiceRequestDto() {
     }
-    public ServiceRequestDto(String message,LocalDate requestDate, Boolean statusOpened, Long account_id) {
+
+    public ServiceRequestDto(String message, LocalDate requestDate, Boolean statusOpened, Long account_id) {
         this.requestDate = requestDate;
         this.statusOpened = statusOpened;
         this.account_id = account_id;
-        this.message=message;
+        this.message = message;
     }
 
     public String getMessage() {
         return message;
     }
+
     public void setMessage(String message) {
         this.message = message;
     }
+
     public LocalDate getRequestDate() {
         return requestDate;
     }
