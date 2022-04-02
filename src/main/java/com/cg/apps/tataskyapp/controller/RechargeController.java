@@ -2,8 +2,10 @@ package com.cg.apps.tataskyapp.controller;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.cg.apps.tataskyapp.dto.RechargeDisplayDto;
 import com.cg.apps.tataskyapp.dto.RechargeDtoForAcc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -56,7 +58,7 @@ public class RechargeController {
     }
 
     @PutMapping("/update/{rechargeDto}")
-    public ResponseEntity<Recharge> update(@RequestBody RechargeDto rechargeDto){
+    public ResponseEntity<RechargeDisplayDto> update(@RequestBody RechargeDto rechargeDto){
         Recharge recharge = new Recharge();
         recharge.setAccount(accountDao.findById(rechargeDto.getAccountId()).orElse(null));
         recharge.setActive(rechargeDto.isActive());
@@ -68,17 +70,22 @@ public class RechargeController {
         recharge.setPlanDescription(rechargeDto.getPlanDescription());
         recharge.setPlanName(rechargeDto.getPlanName());
         recharge.setPurchasedDate(rechargeDto.getPurchasedDate());
-        return new ResponseEntity<Recharge>(rechargeService.update(recharge), HttpStatus.OK);
+        rechargeService.update(recharge);
+        RechargeDisplayDto rechargeDisplayDto = new RechargeDisplayDto(recharge);
+        return new ResponseEntity<>(rechargeDisplayDto, HttpStatus.OK);
     }
 
     @GetMapping("/find/{accountId}")
-    public ResponseEntity<List<Recharge>> findRechargesForUserInDescendingOrderByPurchasedDate(@PathVariable long accountId){
+    public ResponseEntity<List<RechargeDisplayDto>> findRechargesForUserInDescendingOrderByPurchasedDate(@PathVariable long accountId){
         Account account = accountDao.findById(accountId).orElse(null);
         if(account == null) {
             throw new AccountNotFoundException();
         }
         List<Recharge> rechargeInDescendingOrder = rechargeService.findRechargesForUserInDescendingOrderByPurchasedDate(account);
-        return new ResponseEntity<List<Recharge>>(rechargeInDescendingOrder, HttpStatus.OK);
+        List<RechargeDisplayDto> rechargeDisplayDtos = new ArrayList<>();
+        for(Recharge recharge: rechargeInDescendingOrder)
+            rechargeDisplayDtos.add(new RechargeDisplayDto(recharge));
+        return new ResponseEntity<>(rechargeDisplayDtos, HttpStatus.OK);
     }
 
     @GetMapping("/find/foruser/{accountId}")
@@ -88,16 +95,19 @@ public class RechargeController {
             throw new AccountNotFoundException();
         }
         int count = rechargeService.rechargesForUserCount(account);
-        return new ResponseEntity<Integer>(count, HttpStatus.OK);
+        return new ResponseEntity<>(count, HttpStatus.OK);
     }
 
     @GetMapping("/findall/{startDate}/{endDate}")
-    public ResponseEntity<List<Recharge>> findAllRechargesInPeriod(@PathVariable String startDate, @PathVariable String endDate){
+    public ResponseEntity<List<RechargeDisplayDto>> findAllRechargesInPeriod(@PathVariable String startDate, @PathVariable String endDate){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MM-yyyy");
         LocalDate startLDate = LocalDate.parse(startDate, formatter);
         LocalDate endLDate = LocalDate.parse(endDate, formatter);
         List<Recharge> rechargeListInPeriod = rechargeService.findAllRechargesInPeriod(startLDate, endLDate);
-        return new ResponseEntity<List<Recharge>>(rechargeListInPeriod, HttpStatus.OK);
+        List<RechargeDisplayDto> rechargeDisplayDtos = new ArrayList<>();
+        for(Recharge recharge: rechargeListInPeriod)
+            rechargeDisplayDtos.add(new RechargeDisplayDto(recharge));
+        return new ResponseEntity<>(rechargeDisplayDtos, HttpStatus.OK);
     }
 
     @GetMapping("/find/inperiod/{startDate}/{endDate}")

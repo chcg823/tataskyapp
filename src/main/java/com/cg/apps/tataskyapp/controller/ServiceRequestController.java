@@ -2,6 +2,7 @@ package com.cg.apps.tataskyapp.controller;
 
 import com.cg.apps.tataskyapp.dao.AccountDao;
 import com.cg.apps.tataskyapp.dao.ServiceRequestDao;
+import com.cg.apps.tataskyapp.dto.ServiceRequestDisplayDto;
 import com.cg.apps.tataskyapp.dto.ServiceRequestDto;
 import com.cg.apps.tataskyapp.entities.Account;
 import com.cg.apps.tataskyapp.entities.ServiceRequest;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -38,7 +40,7 @@ public class ServiceRequestController {
     }
 
     @GetMapping("/find_opened_req/{accountId}")
-    public ResponseEntity<List<ServiceRequest>> openedServiceRequest(@PathVariable Long accountId) {
+    public ResponseEntity<List<ServiceRequestDisplayDto>> openedServiceRequest(@PathVariable Long accountId) {
         Account acc;
         acc = accDao.findById(accountId).orElse(null);
         if (acc == null)
@@ -46,16 +48,20 @@ public class ServiceRequestController {
         List<ServiceRequest> serReqList = serReq.openedServiceRequest(accountId);
         if (serReqList == null)
             throw new RequestNotFoundException();
-        return new ResponseEntity<List<ServiceRequest>>(serReqList, HttpStatus.OK);
+        List<ServiceRequestDisplayDto> serviceRequestDisplayDtos = new ArrayList<>();
+        for (ServiceRequest serviceRequest : serReqList)
+            serviceRequestDisplayDtos.add(new ServiceRequestDisplayDto(serviceRequest));
+        return new ResponseEntity<>(serviceRequestDisplayDtos, HttpStatus.OK);
     }
 
     @GetMapping("/close/{service_id}")
-    public ResponseEntity<ServiceRequest> close(@PathVariable Long service_id) {
+    public ResponseEntity<ServiceRequestDisplayDto> close(@PathVariable Long service_id) {
         ServiceRequest req;
         req = srDao.findById(service_id).orElse(null);
         if (req == null)
             throw new RequestNotFoundException();
         ServiceRequest sr = serReq.close(service_id);
-        return new ResponseEntity<ServiceRequest>(sr, HttpStatus.OK);
+        ServiceRequestDisplayDto serviceRequestDisplayDto = new ServiceRequestDisplayDto(sr);
+        return new ResponseEntity<>(serviceRequestDisplayDto, HttpStatus.OK);
     }
 }

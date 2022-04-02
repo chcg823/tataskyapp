@@ -1,6 +1,7 @@
 package com.cg.apps.tataskyapp.controller;
 
 
+import com.cg.apps.tataskyapp.dto.UsersDisplayDto;
 import com.cg.apps.tataskyapp.dto.UsersDtoForAcc;
 import com.cg.apps.tataskyapp.dto.UsersDto;
 import com.cg.apps.tataskyapp.entities.Users;
@@ -49,11 +50,12 @@ public class UsersController {
     }
 
     @GetMapping("/{username}")
-    public ResponseEntity<Users> findUsersByUsername(@PathVariable String username) {
+    public ResponseEntity<UsersDisplayDto> findUsersByUsername(@PathVariable String username) {
         Users newUsers = usersService.findUsersByUsername(username);
         if (newUsers == null)
             throw new UserNotFoundException();
-        return new ResponseEntity<>(newUsers, HttpStatus.OK);
+        UsersDisplayDto usersDisplayDto = new UsersDisplayDto(newUsers);
+        return new ResponseEntity<>(usersDisplayDto, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete-id/{id}")

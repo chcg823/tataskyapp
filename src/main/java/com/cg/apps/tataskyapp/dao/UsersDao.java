@@ -21,7 +21,7 @@ public interface UsersDao extends JpaRepository<Users, Long> {
 
     public Optional<Users> findByUsername(String username);
 
-    @Query(value="select urs from Users urs where urs.id=?1")
-    public List<Users> findByUserId(int id);
+    @Query(value="select urs from Users urs where urs.id= ?1")
+    public List<Users> findByUserId(Long id);
 
 }

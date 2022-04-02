@@ -17,6 +17,7 @@ public class UsersDisplayDto {
 
     public UsersDisplayDto(Users user) {
         this.id = user.getId();
+        this.username = user.getUsername();
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.role = user.getRole();

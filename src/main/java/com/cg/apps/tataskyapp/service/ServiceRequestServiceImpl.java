@@ -47,7 +47,6 @@ public class ServiceRequestServiceImpl implements ServiceRequestService {
         Optional<ServiceRequest> opt = serDao.findById(serviceRequestId);
         ServiceRequest req = opt.get();
         req.setStatusOpened(false);
-        req.setMessage("request is closed");
         serDao.save(req);
         return req;
     }

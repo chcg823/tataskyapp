@@ -55,7 +55,10 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public void deleteUsersByUserId(Long id) {
-        usersDao.deleteById(id);
+        Users user = usersDao.findById(id).orElse(null);
+        if(user==null)
+            throw new UserNotFoundException();
+        usersDao.delete(user);
     }
 
 
