@@ -17,12 +17,13 @@ public class Account {
     @JoinColumn(name = "user_id")
     private Users users;
 
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "account", cascade =CascadeType.ALL)
     private List<Recharge> recharges;
 
     @ManyToOne
     @JoinColumn(name = "account_pack")
     private Pack currentPack;
+
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     private List<ServiceRequest> requests = new ArrayList<>();
 

@@ -31,13 +31,11 @@ public class RechargeServiceImpl implements RechargeService {
         recharge.setPurchasedDate(date);
         recharge.setActive(true);
         recharge.setPack(pack);
-        List<Recharge> rechargesList = account.getRecharges();
-        rechargesList.add(recharge);
-        account.setRecharges(rechargesList);
+        rechargeDao.save(recharge);
         account.setCurrentPack(pack);
+        account.getRecharges().add(recharge);
         accountService.update(account);
-        System.out.println(account.getRecharges());
-        return rechargeDao.save(recharge);
+        return recharge;
     }
 
     @Override

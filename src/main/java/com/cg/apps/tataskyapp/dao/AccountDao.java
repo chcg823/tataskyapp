@@ -15,4 +15,5 @@ public interface AccountDao extends JpaRepository<Account, Long> {
 
     @Query(value = "select acc from Account acc where acc.accountId=?1")
     Account getAccById(long accountId);
+
 }

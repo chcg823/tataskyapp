@@ -1,10 +1,11 @@
 package com.cg.apps.tataskyapp.service;
 
-import com.cg.apps.tataskyapp.dao.AccountDao;
-import com.cg.apps.tataskyapp.dao.PackDao;
-import com.cg.apps.tataskyapp.dao.UsersDao;
+import com.cg.apps.tataskyapp.dao.*;
+import com.cg.apps.tataskyapp.dto.ServiceRequestDto;
 import com.cg.apps.tataskyapp.entities.Account;
 import com.cg.apps.tataskyapp.entities.Pack;
+import com.cg.apps.tataskyapp.entities.Recharge;
+import com.cg.apps.tataskyapp.entities.ServiceRequest;
 import com.cg.apps.tataskyapp.utils.AccountAlreadyExistException;
 import com.cg.apps.tataskyapp.utils.AccountNotFoundException;
 import com.cg.apps.tataskyapp.utils.PackNotFoundException;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -25,6 +27,12 @@ public class AccountServiceImpl implements AccountService {
 
     @Autowired
     UsersDao usersDao;
+
+    @Autowired
+    RechargeDao rechargeDao;
+
+    @Autowired
+    ServiceRequestDao serviceRequestDao;
 
     @Override
     public Account add(Account acc) {
@@ -55,7 +63,7 @@ public class AccountServiceImpl implements AccountService {
     public void deleteByAccountId(Long accountId) {
         if (!accDao.existsById(accountId))
             throw new AccountNotFoundException();
-        accDao.delete(accDao.getAccById(accountId));
+        accDao.deleteById(accountId);
     }
 
     @Override

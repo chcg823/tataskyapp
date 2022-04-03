@@ -2,6 +2,7 @@ package com.cg.apps.tataskyapp.dto;
 
 import com.cg.apps.tataskyapp.entities.Account;
 import com.cg.apps.tataskyapp.entities.Pack;
+import com.cg.apps.tataskyapp.entities.ServiceRequest;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -12,6 +13,7 @@ public class AccountDisplayDto {
     private LocalDate registeredDate;
     private UsersDtoForAcc user;
     private List<RechargeDtoForAcc> rechargeDtoForAccList;
+    private List<ServiceRequestDtoForAcc> serviceRequestList;
     private Pack currentPack;
 
     public AccountDisplayDto() {
@@ -23,6 +25,9 @@ public class AccountDisplayDto {
         this.accountId = account.getAccountId();
         this.registeredDate = account.getRegisteredDate();
         this.currentPack = account.getCurrentPack();
+        List<ServiceRequest> serviceRequestList1 = account.getRequests();
+        for(ServiceRequest serviceRequest: serviceRequestList1)
+            serviceRequestList.add(new ServiceRequestDtoForAcc(serviceRequest));
     }
 
     public List<RechargeDtoForAcc> getRechargeDtoForAccList() {
@@ -63,5 +68,13 @@ public class AccountDisplayDto {
 
     public void setCurrentPack(Pack currentPack) {
         this.currentPack = currentPack;
+    }
+
+    public List<ServiceRequestDtoForAcc> getServiceRequestList() {
+        return serviceRequestList;
+    }
+
+    public void setServiceRequestList(List<ServiceRequestDtoForAcc> serviceRequestList) {
+        this.serviceRequestList = serviceRequestList;
     }
 }

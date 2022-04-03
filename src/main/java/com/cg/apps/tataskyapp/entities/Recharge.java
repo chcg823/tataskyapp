@@ -24,7 +24,7 @@ public class Recharge {
     private String planName;
     @Column
     private LocalDate purchasedDate;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "pack_id")
     private Pack pack;
     @ElementCollection
