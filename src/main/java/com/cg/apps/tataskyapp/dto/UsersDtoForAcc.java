@@ -17,7 +17,7 @@ public class UsersDtoForAcc {
     public UsersDtoForAcc(Users user) {
         this.role = user.getRole();
         this.lastName = user.getLastName();
-        this.firstName = user.getLastName();
+        this.firstName = user.getFirstName();
         this.username = user.getUsername();
         this.id = user.getId();
     }

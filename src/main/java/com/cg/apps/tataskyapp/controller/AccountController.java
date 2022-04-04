@@ -4,13 +4,12 @@ import com.cg.apps.tataskyapp.dao.AccountDao;
 import com.cg.apps.tataskyapp.dto.AccountDisplayDto;
 import com.cg.apps.tataskyapp.dto.AccountDto;
 import com.cg.apps.tataskyapp.dto.RechargeDtoForAcc;
-import com.cg.apps.tataskyapp.entities.Account;
-import com.cg.apps.tataskyapp.entities.Pack;
-import com.cg.apps.tataskyapp.entities.Recharge;
-import com.cg.apps.tataskyapp.entities.Users;
+import com.cg.apps.tataskyapp.dto.ServiceRequestDtoForAcc;
+import com.cg.apps.tataskyapp.entities.*;
 import com.cg.apps.tataskyapp.service.AccountService;
 import com.cg.apps.tataskyapp.service.PackService;
 import com.cg.apps.tataskyapp.service.UsersService;
+import com.cg.apps.tataskyapp.utils.AccountWithUserExistException;
 import com.cg.apps.tataskyapp.utils.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -44,6 +43,8 @@ public class AccountController {
         Users user = usersService.findUsersById(accountDto.getUserId());
         if (user == null)
             throw new UserNotFoundException();
+        if(user.getAccount()!=null)
+            throw new AccountWithUserExistException();
         Account newAccount = new Account();
         newAccount.setAccountId(accountDto.getId());
         newAccount.setRegisteredDate(accountDto.getRegisteredDate());
@@ -62,7 +63,11 @@ public class AccountController {
         List<RechargeDtoForAcc> rechargeDtoForAccList = new ArrayList<>();
         for (Recharge recharge : account.getRecharges())
             rechargeDtoForAccList.add(new RechargeDtoForAcc(recharge));
+        List<ServiceRequestDtoForAcc> serviceRequestDtoForAccList = new ArrayList<>();
+        for(ServiceRequest serviceRequest: account.getRequests())
+            serviceRequestDtoForAccList.add(new ServiceRequestDtoForAcc(serviceRequest));
         accountDisplayDto.setRechargeDtoForAccList(rechargeDtoForAccList);
+        accountDisplayDto.setServiceRequestList(serviceRequestDtoForAccList);
         return new ResponseEntity<>(accountDisplayDto, HttpStatus.OK);
     }
 

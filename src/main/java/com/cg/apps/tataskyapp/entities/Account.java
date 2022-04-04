@@ -14,11 +14,11 @@ public class Account {
     private Long accountId;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", unique = true)
     private Users users;
 
     @OneToMany(mappedBy = "account", cascade =CascadeType.ALL)
-    private List<Recharge> recharges;
+    private List<Recharge> recharges = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "account_pack")

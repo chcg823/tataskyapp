@@ -13,7 +13,7 @@ public class AccountDisplayDto {
     private LocalDate registeredDate;
     private UsersDtoForAcc user;
     private List<RechargeDtoForAcc> rechargeDtoForAccList;
-    private List<ServiceRequestDtoForAcc> serviceRequestList;
+    private List<ServiceRequestDtoForAcc> serviceRequestDtoAccList;
     private Pack currentPack;
 
     public AccountDisplayDto() {
@@ -25,9 +25,6 @@ public class AccountDisplayDto {
         this.accountId = account.getAccountId();
         this.registeredDate = account.getRegisteredDate();
         this.currentPack = account.getCurrentPack();
-        List<ServiceRequest> serviceRequestList1 = account.getRequests();
-        for(ServiceRequest serviceRequest: serviceRequestList1)
-            serviceRequestList.add(new ServiceRequestDtoForAcc(serviceRequest));
     }
 
     public List<RechargeDtoForAcc> getRechargeDtoForAccList() {
@@ -71,10 +68,10 @@ public class AccountDisplayDto {
     }
 
     public List<ServiceRequestDtoForAcc> getServiceRequestList() {
-        return serviceRequestList;
+        return serviceRequestDtoAccList;
     }
 
     public void setServiceRequestList(List<ServiceRequestDtoForAcc> serviceRequestList) {
-        this.serviceRequestList = serviceRequestList;
+        this.serviceRequestDtoAccList = serviceRequestList;
     }
 }

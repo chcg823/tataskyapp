@@ -1,5 +1,7 @@
 package com.cg.apps.tataskyapp.entities;
 
+import com.cg.apps.tataskyapp.entities.Account;
+
 import javax.persistence.*;
 
 @Entity
@@ -9,7 +11,7 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(length = 30)
+    @Column(length = 30, unique = true)
     private String username;
     @Column(length = 30)
     private String firstName;

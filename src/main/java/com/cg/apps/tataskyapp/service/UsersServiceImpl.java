@@ -69,10 +69,10 @@ public class UsersServiceImpl implements UsersService {
 
 
     @Override
-    public Users findUsersByUsername(String username) {
+    public Optional<Users> findUsersByUsername(String username) {
         Optional<Users> opt = usersDao.findByUsername(username);
-        Users usr = opt.get();
-        return usr;
+        //Users usr = opt.get();
+        return opt;
 
     }
 

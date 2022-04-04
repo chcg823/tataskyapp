@@ -48,4 +48,14 @@ public class ExceptionHandlerMain {
     public ResponseEntity<Object> exception(UserAlreadyExistException e) {
         return new ResponseEntity<Object>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(value = UsernameAlreadyExistException.class)
+    public ResponseEntity<Object> exception(UsernameAlreadyExistException e) {
+        return new ResponseEntity<Object>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(value = AccountWithUserExistException.class)
+    public ResponseEntity<Object> exception(AccountWithUserExistException e) {
+        return new ResponseEntity<Object>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
 }
