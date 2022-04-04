@@ -26,4 +26,6 @@ public interface RechargeService {
     int rechargesCount(Pack pack);
 
     String expireIfValidityFinished(Account account, Recharge recharge);
+
+    Recharge update(Pack pack, Account account, long rechargeId);
 }

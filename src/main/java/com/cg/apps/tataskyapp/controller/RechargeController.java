@@ -4,8 +4,6 @@ import com.cg.apps.tataskyapp.dao.AccountDao;
 import com.cg.apps.tataskyapp.dao.PackDao;
 import com.cg.apps.tataskyapp.dao.RechargeDao;
 import com.cg.apps.tataskyapp.dto.RechargeDisplayDto;
-import com.cg.apps.tataskyapp.dto.RechargeDto;
-import com.cg.apps.tataskyapp.dto.RechargeDtoForAcc;
 import com.cg.apps.tataskyapp.entities.Account;
 import com.cg.apps.tataskyapp.entities.Pack;
 import com.cg.apps.tataskyapp.entities.Recharge;
@@ -36,7 +34,7 @@ public class RechargeController {
     RechargeDao rechargeDao;
 
     @PostMapping("/create/{packId}/{accountId}")
-    public ResponseEntity<RechargeDtoForAcc> createRecharge(@PathVariable long packId, @PathVariable long accountId) {
+    public ResponseEntity<RechargeDisplayDto> createRecharge(@PathVariable long packId, @PathVariable long accountId) {
         Pack pack = packDao.findById(packId).orElse(null);
         Account account = accountDao.findById(accountId).orElse(null);
         if (pack == null) {
@@ -46,25 +44,26 @@ public class RechargeController {
             throw new AccountNotFoundException();
         }
         Recharge recharge = rechargeService.createRecharge(pack, account);
-        RechargeDtoForAcc rechargeDtoForAcc = new RechargeDtoForAcc(recharge);
-        return new ResponseEntity<RechargeDtoForAcc>(rechargeDtoForAcc, HttpStatus.OK);
+        RechargeDisplayDto rechargeDisplayDto = new RechargeDisplayDto(recharge);
+        return new ResponseEntity<RechargeDisplayDto>(rechargeDisplayDto, HttpStatus.OK);
     }
 
-    @PutMapping("/update/{rechargeDto}")
-    public ResponseEntity<RechargeDisplayDto> update(@RequestBody RechargeDto rechargeDto) {
-        Recharge recharge = new Recharge();
-        recharge.setAccount(accountDao.findById(rechargeDto.getAccountId()).orElse(null));
-        recharge.setActive(rechargeDto.isActive());
-        recharge.setPack(packDao.findById(rechargeDto.getPackId()).orElse(null));
-        recharge.setAmount(rechargeDto.getAmount());
-        recharge.setChannels(rechargeDto.getChannels());
-        recharge.setDaysValidity(rechargeDto.getDaysValidity());
-        recharge.setId(rechargeDto.getRechargeId());
-        recharge.setPlanDescription(rechargeDto.getPlanDescription());
-        recharge.setPlanName(rechargeDto.getPlanName());
-        recharge.setPurchasedDate(rechargeDto.getPurchasedDate());
-        rechargeService.update(recharge);
-        RechargeDisplayDto rechargeDisplayDto = new RechargeDisplayDto(recharge);
+    @PutMapping("/update/{packId}/{accountId}/{rechargeId}")
+    public ResponseEntity<RechargeDisplayDto> update(@PathVariable long packId, @PathVariable long accountId, @PathVariable long rechargeId) {
+        Account account = accountDao.findById(accountId).orElse(null);
+        Pack pack = packDao.findById(packId).orElse(null);
+        Recharge recharge = rechargeDao.findById(rechargeId).orElse(null);
+        if (pack == null) {
+            throw new PackNotFoundException();
+        }
+        if (account == null) {
+            throw new AccountNotFoundException();
+        }
+        if (recharge == null) {
+            throw new RechargeNotFoundException();
+        }
+        Recharge recharge2 = rechargeService.update(pack, account, rechargeId);
+        RechargeDisplayDto rechargeDisplayDto = new RechargeDisplayDto(recharge2);
         return new ResponseEntity<>(rechargeDisplayDto, HttpStatus.OK);
     }
 
