@@ -1,12 +1,11 @@
 package com.cg.apps.tataskyapp.dto;
 
-import ch.qos.logback.classic.pattern.LineOfCallerConverter;
 import com.cg.apps.tataskyapp.entities.Recharge;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public class RechargeToForAcc {
+public class RechargeDtoForAcc {
 
     private Long id;
     private Double amount;
@@ -17,11 +16,11 @@ public class RechargeToForAcc {
     private List<String> channels;
     private boolean active;
 
-    public RechargeToForAcc() {
+    public RechargeDtoForAcc() {
         super();
     }
 
-    public RechargeToForAcc(Recharge recharge) {
+    public RechargeDtoForAcc(Recharge recharge) {
         super();
         this.id = recharge.getId();
         this.amount = recharge.getAmount();

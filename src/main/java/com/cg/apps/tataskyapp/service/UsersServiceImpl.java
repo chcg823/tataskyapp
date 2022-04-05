@@ -3,7 +3,6 @@ package com.cg.apps.tataskyapp.service;
 import com.cg.apps.tataskyapp.dao.AccountDao;
 import com.cg.apps.tataskyapp.dao.UsersDao;
 import com.cg.apps.tataskyapp.dto.UsersDto;
-import com.cg.apps.tataskyapp.entities.Account;
 import com.cg.apps.tataskyapp.entities.Users;
 import com.cg.apps.tataskyapp.utils.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,11 +54,13 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public void deleteUsersByUserId(Long id) {
-        usersDao.deleteById(id);
+        Users user = usersDao.findById(id).orElse(null);
+        if (user == null)
+            throw new UserNotFoundException();
+        usersDao.delete(user);
     }
 
 
-    //////why account is getting null??????///////
     @Override
     public Users findUsersById(Long id) {
         Users usr = usersDao.findById(id).orElse(null);
@@ -67,12 +68,11 @@ public class UsersServiceImpl implements UsersService {
     }
 
 
-    ///showing error/////
     @Override
-    public Users findUsersByUsername(String username) {
+    public Optional<Users> findUsersByUsername(String username) {
         Optional<Users> opt = usersDao.findByUsername(username);
-        Users usr = opt.get();
-        return usr;
+        //Users usr = opt.get();
+        return opt;
 
     }
 

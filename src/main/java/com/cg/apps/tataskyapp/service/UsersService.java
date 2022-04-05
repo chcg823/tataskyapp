@@ -3,6 +3,8 @@ package com.cg.apps.tataskyapp.service;
 import com.cg.apps.tataskyapp.dto.UsersDto;
 import com.cg.apps.tataskyapp.entities.Users;
 
+import java.util.Optional;
+
 public interface UsersService {
 
     void registerUsers(UsersDto usr);
@@ -11,7 +13,7 @@ public interface UsersService {
 
     Users findUsersById(Long id);
 
-    Users findUsersByUsername(String username);
+    Optional<Users> findUsersByUsername(String username);
 
     void deleteUsersByUserId(Long id);
 

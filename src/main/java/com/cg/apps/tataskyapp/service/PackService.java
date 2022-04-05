@@ -1,21 +1,25 @@
 package com.cg.apps.tataskyapp.service;
 
-import java.util.List;
-
 import com.cg.apps.tataskyapp.entities.Pack;
 
+import java.util.List;
+
 public interface PackService {
-	void addPack(Pack pack);
-	void removePack(Pack pack);
-	Pack update(Pack pack);
+    void addPack(Pack pack);
 
-	Pack findPackById(Long packId);
+    void removePack(Pack pack);
 
-	List<Pack>findPacksGreaterThanAmount(double amount);
+    Pack update(Pack pack);
 
-	List<Pack>findPacksInAscendingOrderByCost();
+    Pack findPackById(Long packId);
 
-	List<Pack> findPacksInAscendingOrderByDaysValidity();
-	List<Pack> popularPacks();
-	void deleteByPackId(Long packId);
+    List<Pack> findPacksGreaterThanAmount(double amount);
+
+    List<Pack> findPacksInAscendingOrderByCost();
+
+    List<Pack> findPacksInAscendingOrderByDaysValidity();
+
+    List<Pack> popularPacks();
+
+    void deleteByPackId(Long packId);
 }

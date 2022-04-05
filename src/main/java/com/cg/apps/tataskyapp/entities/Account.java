@@ -14,15 +14,16 @@ public class Account {
     private Long accountId;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", unique = true)
     private Users users;
 
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
-    private List<Recharge> recharges;
+    @OneToMany(mappedBy = "account", cascade =CascadeType.ALL)
+    private List<Recharge> recharges = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "account_pack")
     private Pack currentPack;
+
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     private List<ServiceRequest> requests = new ArrayList<>();
 

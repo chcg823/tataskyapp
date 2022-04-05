@@ -19,6 +19,9 @@ public class RechargeServiceImpl implements RechargeService {
     @Autowired
     AccountService accountService;
 
+//    @Autowired
+//    RechargeService rechargeService;
+
     @Override
     public Recharge createRecharge(Pack pack, Account account) {
         Recharge recharge = new Recharge();
@@ -32,18 +35,29 @@ public class RechargeServiceImpl implements RechargeService {
         recharge.setActive(true);
         recharge.setPack(pack);
         account.setCurrentPack(pack);
-        return rechargeDao.save(recharge);
+        account.getRecharges().add(recharge);
+        accountService.update(account);
+        return recharge;
+        //return rechargeDao.save(recharge);
     }
 
     @Override
     public Recharge update(Recharge recharge) {
-        Recharge rechargeUpdated = new Recharge();
-        rechargeDao.deleteById(recharge.getId());
-        rechargeUpdated.setAccount(recharge.getAccount());
-        rechargeUpdated.setAmount(recharge.getAmount());
-        rechargeUpdated.setDaysValidity(recharge.getDaysValidity());
-        rechargeUpdated.setPlanDescription(recharge.getPlanDescription());
-        rechargeUpdated.setPlanName(recharge.getPlanName());
+        return null;
+    }
+
+    @Override
+    public Recharge update(Pack pack, Account account, long rechargeId) {
+        Recharge rechargeUpdated = rechargeDao.findById(rechargeId).orElse(null);
+        rechargeUpdated.setAccount(account);
+        rechargeUpdated.setPack(pack);
+        rechargeUpdated.setAmount(pack.getCost());
+        rechargeUpdated.setDaysValidity(pack.getDaysValidity());
+        rechargeUpdated.setPlanDescription(pack.getDescription());
+        rechargeUpdated.setPlanName(pack.getPlanName());
+        rechargeUpdated.setActive(true);
+        LocalDate date = LocalDate.now();
+        rechargeUpdated.setPurchasedDate(date);
         return rechargeDao.save(rechargeUpdated);
     }
 

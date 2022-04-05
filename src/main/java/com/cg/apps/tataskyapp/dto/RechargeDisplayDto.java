@@ -1,61 +1,45 @@
 package com.cg.apps.tataskyapp.dto;
 
+import com.cg.apps.tataskyapp.entities.Pack;
+import com.cg.apps.tataskyapp.entities.Recharge;
+
 import java.time.LocalDate;
 import java.util.List;
 
-public class RechargeDto {
+public class RechargeDisplayDto {
 
-    private long rechargeId;
-    private long accountId;
-    private long packId;
+    private long id;
     private double amount;
     private int daysValidity;
     private String planDescription;
     private String planName;
     private LocalDate purchasedDate;
+    private Pack pack;
     private List<String> channels;
     private boolean active;
 
-    public RechargeDto() {
+    public RechargeDisplayDto() {
 
     }
 
-    public RechargeDto(long rechargeId, long accountId, long packId, double amount, int daysValidity,
-                       String planDescription, String planName, LocalDate purchasedDate, List<String> channels, boolean active) {
-        this.rechargeId = rechargeId;
-        this.accountId = accountId;
-        this.packId = packId;
-        this.amount = amount;
-        this.daysValidity = daysValidity;
-        this.planDescription = planDescription;
-        this.planName = planName;
-        this.purchasedDate = purchasedDate;
-        this.channels = channels;
-        this.active = active;
+    public RechargeDisplayDto(Recharge recharge) {
+        this.id = recharge.getId();
+        this.amount = recharge.getAmount();
+        this.daysValidity = recharge.getDaysValidity();
+        this.planDescription = recharge.getPlanDescription();
+        this.planName = recharge.getPlanName();
+        this.purchasedDate = recharge.getPurchasedDate();
+        this.pack = recharge.getPack();
+        this.channels = recharge.getChannels();
+        this.active = recharge.isActive();
     }
 
-    public long getRechargeId() {
-        return rechargeId;
+    public long getId() {
+        return id;
     }
 
-    public void setRechargeId(long rechargeId) {
-        this.rechargeId = rechargeId;
-    }
-
-    public long getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(long accountId) {
-        this.accountId = accountId;
-    }
-
-    public long getPackId() {
-        return packId;
-    }
-
-    public void setPackId(long packId) {
-        this.packId = packId;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public double getAmount() {
@@ -96,6 +80,14 @@ public class RechargeDto {
 
     public void setPurchasedDate(LocalDate purchasedDate) {
         this.purchasedDate = purchasedDate;
+    }
+
+    public Pack getPack() {
+        return pack;
+    }
+
+    public void setPack(Pack pack) {
+        this.pack = pack;
     }
 
     public List<String> getChannels() {
