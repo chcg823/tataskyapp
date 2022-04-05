@@ -8,6 +8,7 @@ import com.cg.apps.tataskyapp.entities.Account;
 import com.cg.apps.tataskyapp.entities.ServiceRequest;
 import com.cg.apps.tataskyapp.service.ServiceRequestService;
 import com.cg.apps.tataskyapp.utils.AccountNotFoundException;
+import com.cg.apps.tataskyapp.utils.NoOpenedServiceRequestException;
 import com.cg.apps.tataskyapp.utils.RequestNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,21 +40,34 @@ public class ServiceRequestController {
         //return str;
     }
 
-    @GetMapping("/find_opened_req/{accountId}")
-    public ResponseEntity<List<ServiceRequestDisplayDto>> openedServiceRequest(@PathVariable Long accountId) {
+    @GetMapping("/find_service_reqs/{accountId}")
+    public ResponseEntity<List<ServiceRequestDisplayDto>> serviceRequests(@PathVariable Long accountId) {
         Account acc;
         acc = accDao.findById(accountId).orElse(null);
         if (acc == null)
             throw new AccountNotFoundException();
-        List<ServiceRequest> serReqList = serReq.openedServiceRequest(accountId);
-        if (serReqList == null)
+        List<ServiceRequest> serReqList = serReq.serviceRequests(accountId);
+        if (serReqList.size()==0)
             throw new RequestNotFoundException();
         List<ServiceRequestDisplayDto> serviceRequestDisplayDtos = new ArrayList<>();
         for (ServiceRequest serviceRequest : serReqList)
             serviceRequestDisplayDtos.add(new ServiceRequestDisplayDto(serviceRequest));
         return new ResponseEntity<>(serviceRequestDisplayDtos, HttpStatus.OK);
     }
-
+    @GetMapping("/find_opened_service_req/{accountId}")
+    public ResponseEntity<List<ServiceRequestDisplayDto>> openedServiceRequests(@PathVariable Long accountId) {
+        Account acc;
+        acc = accDao.findById(accountId).orElse(null);
+        if (acc == null)
+            throw new AccountNotFoundException();
+        List<ServiceRequest> serReqList = serReq.openedServiceRequests(accountId);
+        if (serReqList.size()==0)
+            throw new NoOpenedServiceRequestException();
+        List<ServiceRequestDisplayDto> serviceRequestDisplayDtos = new ArrayList<>();
+        for (ServiceRequest serviceRequest : serReqList)
+            serviceRequestDisplayDtos.add(new ServiceRequestDisplayDto(serviceRequest));
+        return new ResponseEntity<>(serviceRequestDisplayDtos, HttpStatus.OK);
+    }
     @GetMapping("/close/{service_id}")
     public ResponseEntity<ServiceRequestDisplayDto> close(@PathVariable Long service_id) {
         ServiceRequest req;

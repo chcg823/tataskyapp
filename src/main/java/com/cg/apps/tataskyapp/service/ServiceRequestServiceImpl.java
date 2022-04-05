@@ -8,6 +8,7 @@ import com.cg.apps.tataskyapp.entities.ServiceRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,13 +36,25 @@ public class ServiceRequestServiceImpl implements ServiceRequestService {
     }
 
     @Override
-    public List<ServiceRequest> openedServiceRequest(Long accountId) {
+    public List<ServiceRequest> serviceRequests(Long accountId) {
         Optional<Account> opt = accDao.findById(accountId);
         Account acc = opt.get();
         List<ServiceRequest> reqlist = acc.getRequests();
         return reqlist;
     }
-
+    @Override
+    public List<ServiceRequest> openedServiceRequests(Long accountId) {
+        Optional<Account> opt = accDao.findById(accountId);
+        Account acc = opt.get();
+        List<ServiceRequest> reqlist = acc.getRequests();
+        List<ServiceRequest> reqs = new ArrayList<ServiceRequest>();
+        for(ServiceRequest i : reqlist) {
+            if(i.getStatusOpened().equals(true)) {
+                reqs.add(i);
+            }
+        }
+        return reqs;
+    }
     @Override
     public ServiceRequest close(Long serviceRequestId) {
         Optional<ServiceRequest> opt = serDao.findById(serviceRequestId);
@@ -50,5 +63,4 @@ public class ServiceRequestServiceImpl implements ServiceRequestService {
         serDao.save(req);
         return req;
     }
-
 }

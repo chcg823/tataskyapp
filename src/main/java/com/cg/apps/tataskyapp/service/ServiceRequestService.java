@@ -7,10 +7,10 @@ import java.util.List;
 
 public interface ServiceRequestService {
 
-    //void addServiceRequest(ServiceRequest sr);
     String createServiceRequestForUser(ServiceRequestDto dto);
 
-    List<ServiceRequest> openedServiceRequest(Long accountId);
+    List<ServiceRequest> serviceRequests(Long accountId);
+    List<ServiceRequest>openedServiceRequests(Long accountId);
 
     ServiceRequest close(Long serviceRequestId);
 }
