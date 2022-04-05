@@ -77,8 +77,10 @@ public class AccountController {
     public ResponseEntity<AccountDisplayDto> updateAccount(@RequestBody AccountDto accountDto) {
         Account acc = accountService.findByAccountId(accountDto.getId());
         if (acc == null)
-            addAccount(accountDto);
+            throw new AccountNotFoundException();
         Users user = usersService.findUsersById(accountDto.getUserId());
+        if(user==null)
+            throw new UserNotFoundException();
         acc.setAccountId(accountDto.getId());
         acc.setRegisteredDate(accountDto.getRegisteredDate());
         acc.setUsers(user);
