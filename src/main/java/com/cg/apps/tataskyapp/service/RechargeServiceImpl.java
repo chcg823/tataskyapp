@@ -58,6 +58,9 @@ public class RechargeServiceImpl implements RechargeService {
         rechargeUpdated.setActive(true);
         LocalDate date = LocalDate.now();
         rechargeUpdated.setPurchasedDate(date);
+        account.setCurrentPack(pack);
+        account.getRecharges().add(rechargeUpdated);
+        accountService.update(account);
         return rechargeDao.save(rechargeUpdated);
     }
 

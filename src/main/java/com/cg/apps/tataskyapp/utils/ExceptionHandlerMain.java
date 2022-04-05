@@ -58,4 +58,10 @@ public class ExceptionHandlerMain {
     public ResponseEntity<Object> exception(AccountWithUserExistException e) {
         return new ResponseEntity<Object>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(value = NoOpenedServiceRequestException.class)
+    public ResponseEntity<Object> exception(NoOpenedServiceRequestException e) {
+        return new ResponseEntity<Object>(e.getMessage(), HttpStatus.NOT_FOUND);
+
+    }
 }

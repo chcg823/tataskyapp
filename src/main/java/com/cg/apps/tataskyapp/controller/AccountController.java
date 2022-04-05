@@ -9,7 +9,9 @@ import com.cg.apps.tataskyapp.entities.*;
 import com.cg.apps.tataskyapp.service.AccountService;
 import com.cg.apps.tataskyapp.service.PackService;
 import com.cg.apps.tataskyapp.service.UsersService;
+import com.cg.apps.tataskyapp.utils.AccountNotFoundException;
 import com.cg.apps.tataskyapp.utils.AccountWithUserExistException;
+import com.cg.apps.tataskyapp.utils.PackNotFoundException;
 import com.cg.apps.tataskyapp.utils.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -116,7 +118,11 @@ public class AccountController {
     @PostMapping("/remove-pack/{accountId}/{packId}")
     public ResponseEntity<String> removePackForAccount(@PathVariable Long accountId, @PathVariable Long packId) {
         Account account = accountService.findByAccountId(accountId);
+        if(account==null)
+            throw new AccountNotFoundException();
         Pack pack = packService.findPackById(packId);
+        if(pack==null)
+            throw new PackNotFoundException();
         accountService.removePackFromAccount(account, pack);
         return new ResponseEntity<>("pack removed", HttpStatus.OK);
     }
