@@ -24,6 +24,11 @@ public class ExceptionHandlerMain {
         return new ResponseEntity<Object>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(value = AccountWithUserExistException.class)
+    public ResponseEntity<Object> exception(AccountWithUserExistException e) {
+        return new ResponseEntity<Object>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(value = PackNotFoundException.class)
     public ResponseEntity<Object> exception(PackNotFoundException e) {
         return new ResponseEntity<Object>(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -31,6 +36,21 @@ public class ExceptionHandlerMain {
 
     @ExceptionHandler(value = PackAlreadyExistException.class)
     public ResponseEntity<Object> exception(PackAlreadyExistException e) {
+        return new ResponseEntity<Object>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(value = PackIsEmptyException.class)
+    public ResponseEntity<Object> exception(PackIsEmptyException e) {
+        return new ResponseEntity<Object>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(value = NoPackGreaterThanAmountException.class)
+    public ResponseEntity<Object> exception(NoPackGreaterThanAmountException e) {
+        return new ResponseEntity<Object>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(value = NoPopularPackException.class)
+    public ResponseEntity<Object> exception(NoPopularPackException e) {
         return new ResponseEntity<Object>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
@@ -52,16 +72,5 @@ public class ExceptionHandlerMain {
     @ExceptionHandler(value = UsernameAlreadyExistException.class)
     public ResponseEntity<Object> exception(UsernameAlreadyExistException e) {
         return new ResponseEntity<Object>(e.getMessage(), HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(value = AccountWithUserExistException.class)
-    public ResponseEntity<Object> exception(AccountWithUserExistException e) {
-        return new ResponseEntity<Object>(e.getMessage(), HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(value = NoOpenedServiceRequestException.class)
-    public ResponseEntity<Object> exception(NoOpenedServiceRequestException e) {
-        return new ResponseEntity<Object>(e.getMessage(), HttpStatus.NOT_FOUND);
-
     }
 }

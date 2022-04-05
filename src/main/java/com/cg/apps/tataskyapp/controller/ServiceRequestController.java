@@ -47,13 +47,14 @@ public class ServiceRequestController {
         if (acc == null)
             throw new AccountNotFoundException();
         List<ServiceRequest> serReqList = serReq.serviceRequests(accountId);
-        if (serReqList.size()==0)
+        if (serReqList.size() == 0)
             throw new RequestNotFoundException();
         List<ServiceRequestDisplayDto> serviceRequestDisplayDtos = new ArrayList<>();
         for (ServiceRequest serviceRequest : serReqList)
             serviceRequestDisplayDtos.add(new ServiceRequestDisplayDto(serviceRequest));
         return new ResponseEntity<>(serviceRequestDisplayDtos, HttpStatus.OK);
     }
+
     @GetMapping("/find_opened_service_req/{accountId}")
     public ResponseEntity<List<ServiceRequestDisplayDto>> openedServiceRequests(@PathVariable Long accountId) {
         Account acc;
@@ -61,13 +62,14 @@ public class ServiceRequestController {
         if (acc == null)
             throw new AccountNotFoundException();
         List<ServiceRequest> serReqList = serReq.openedServiceRequests(accountId);
-        if (serReqList.size()==0)
+        if (serReqList.size() == 0)
             throw new NoOpenedServiceRequestException();
         List<ServiceRequestDisplayDto> serviceRequestDisplayDtos = new ArrayList<>();
         for (ServiceRequest serviceRequest : serReqList)
             serviceRequestDisplayDtos.add(new ServiceRequestDisplayDto(serviceRequest));
         return new ResponseEntity<>(serviceRequestDisplayDtos, HttpStatus.OK);
     }
+
     @GetMapping("/close/{service_id}")
     public ResponseEntity<ServiceRequestDisplayDto> close(@PathVariable Long service_id) {
         ServiceRequest req;

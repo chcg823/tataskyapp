@@ -45,7 +45,7 @@ public class AccountController {
         Users user = usersService.findUsersById(accountDto.getUserId());
         if (user == null)
             throw new UserNotFoundException();
-        if(user.getAccount()!=null)
+        if (user.getAccount() != null)
             throw new AccountWithUserExistException();
         Account newAccount = new Account();
         newAccount.setAccountId(accountDto.getId());
@@ -66,7 +66,7 @@ public class AccountController {
         for (Recharge recharge : account.getRecharges())
             rechargeDtoForAccList.add(new RechargeDtoForAcc(recharge));
         List<ServiceRequestDtoForAcc> serviceRequestDtoForAccList = new ArrayList<>();
-        for(ServiceRequest serviceRequest: account.getRequests())
+        for (ServiceRequest serviceRequest : account.getRequests())
             serviceRequestDtoForAccList.add(new ServiceRequestDtoForAcc(serviceRequest));
         accountDisplayDto.setRechargeDtoForAccList(rechargeDtoForAccList);
         accountDisplayDto.setServiceRequestList(serviceRequestDtoForAccList);
@@ -79,7 +79,7 @@ public class AccountController {
         if (acc == null)
             throw new AccountNotFoundException();
         Users user = usersService.findUsersById(accountDto.getUserId());
-        if(user==null)
+        if (user == null)
             throw new UserNotFoundException();
         acc.setAccountId(accountDto.getId());
         acc.setRegisteredDate(accountDto.getRegisteredDate());
@@ -120,10 +120,10 @@ public class AccountController {
     @PostMapping("/remove-pack/{accountId}/{packId}")
     public ResponseEntity<String> removePackForAccount(@PathVariable Long accountId, @PathVariable Long packId) {
         Account account = accountService.findByAccountId(accountId);
-        if(account==null)
+        if (account == null)
             throw new AccountNotFoundException();
         Pack pack = packService.findPackById(packId);
-        if(pack==null)
+        if (pack == null)
             throw new PackNotFoundException();
         accountService.removePackFromAccount(account, pack);
         return new ResponseEntity<>("pack removed", HttpStatus.OK);
